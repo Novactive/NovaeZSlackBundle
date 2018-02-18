@@ -57,6 +57,10 @@ allowing you to crazy search like:
 
 ## Screenshots
 
+### Share from the BO
+
+![shareonslack]
+
 ### Messages
 
 ![Message1]
@@ -67,9 +71,11 @@ allowing you to crazy search like:
 ![Confirmation]
 
 ### Selects
+
 ![PublicationChain]
 
 ### Search Command
+
 ![Search]
 
 
@@ -79,6 +85,8 @@ allowing you to crazy search like:
 [Message2]: images/Message2.png
 [PublicationChain]: images/PublicationChain.png
 [Search]: images/search.png
+[shareonslack]: images/shareonslack.png
+
 [Doc-Commands]: images/Commands.png
 [Doc-Interactions]: images/Interactions.png
 [Doc-Models]: images/Models.png

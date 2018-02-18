@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Novactive\Bundle\eZSlackBundle\Core\Converter;
 
 use eZ\Publish\Core\SignalSlot\Signal;
+use Novactive\Bundle\eZSlackBundle\Core\Signal\Shared;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider as InteractionProvider;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Message as MessageModel;
 
@@ -68,6 +69,9 @@ class Message
             }
             if ($signal instanceof Signal\ObjectStateService\SetContentStateSignal) {
                 $message->setText('_t:message.text.content.state.updated');
+            }
+            if ($signal instanceof Shared) {
+                $message->setText('_t:message.text.content.shared');
             }
         }
         $attachments = $this->provider->getAttachments($signal);

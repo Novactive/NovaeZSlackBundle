@@ -8,7 +8,6 @@ services:
             $jmsSerializer: '@jms_serializer'
             $configResolver: '@ezpublish.config.resolver'
 
-
     Novactive\Bundle\eZSlackBundle\Controller\:
         resource: '../../Controller'
         tags: ['controller.service_arguments']
@@ -38,6 +37,10 @@ services:
     Novactive\Bundle\eZSlackBundle\Listener\Request:
         tags:
             - { name: kernel.event_listener, event: kernel.request }
+
+    Novactive\Bundle\eZSlackBundle\Listener\MenuContentSidebarRight:
+        tags:
+            - { name: kernel.event_listener, event: "ezplatform_admin_ui.menu_configure.content_sidebar_right", method: "onMenuConfigure" }
 
     # Native or 3rd party
     Symfony\Component\Translation\TranslatorInterface:

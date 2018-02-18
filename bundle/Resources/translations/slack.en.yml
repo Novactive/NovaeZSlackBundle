@@ -9,7 +9,6 @@ field.content.version: "Version"
 field.content.mainlocationid: "Main Location Id"
 field.content.languages: "Languages"
 
-
 message.text.content.created: "A new content has been created."
 message.text.content.updated: "A content has been updated."
 
@@ -18,7 +17,7 @@ message.text.content.unhid: "A content has been made visible."
 message.text.content.trashed: "A content has been trashed."
 message.text.content.recovered: "A content has been recovered."
 message.text.content.state.updated: "The state for this content has been updated."
-
+message.text.content.shared: "This content has just been shared."
 
 action.trash: "Trash"
 action.recover: "Recover"
@@ -37,3 +36,4 @@ action.state.changed: "State has been changed."
 provider.basic-buttons: "Basic Actions"
 provider.states: "Object state changes"
 
+admin.share.on.slack: "Share on Slack"

@@ -39,9 +39,14 @@ class NovaeZSlackExtension extends Extension
         $config        = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('ezadminui.yml');
         $loader->load('default_settings.yml');
         $loader->load('services.yml');
         $loader->load('interactions_services.yml');
+
+        $asseticBundles   = $container->getParameter('assetic.bundles');
+        $asseticBundles[] = 'NovaeZSlackBundle';
+        $container->setParameter('assetic.bundles', $asseticBundles);
 
         $processor = new ConfigurationProcessor($container, $this->getAlias());
         $processor->mapSetting('slack_verification_token', $config);
