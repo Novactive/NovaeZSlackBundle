@@ -1,0 +1,39 @@
+@startuml
+
+title "Slack Commands"
+
+Actor Alice
+
+Alice --> Slack: Run a command: "/ez search plop"
+Slack --> eZ: Call the callback
+
+activate eZ
+eZ --> eZ: Check the Token
+eZ --> eZ: Execute the Command
+eZ --> eZ: Create a Slack Message
+eZ --> Slack: Send the Message
+deactivate eZ
+
+activate Slack
+Slack --> Slack: Display Message
+Slack --> Alice: See/Interact with Message
+deactivate Slack
+
+Alice --> Slack: Click on a Message Action
+Slack --> eZ: Call the interaction Callback
+
+activate eZ
+eZ --> eZ: Check Token
+eZ --> eZ: Exectute Action
+eZ --> Slack: Update Message
+deactivate eZ
+
+activate Slack
+Slack --> Slack: Display Message
+Alice --> Slack: See/Interact with Message
+deactivate Slack
+
+
+
+
+@enduml

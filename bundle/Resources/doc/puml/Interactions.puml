@@ -1,0 +1,30 @@
+@startuml
+
+title "Slack Interactive Actions"
+
+activate eZ
+eZ --> eZ: Receive a Signal
+eZ --> eZ: Create a Slack Message
+eZ --> Slack: Send the Message
+deactivate eZ
+
+activate Slack
+Slack --> Slack: Display Message
+Actor Alice
+Alice --> Slack: See/Interact with Message
+Slack --> eZ: Call the interaction Callback
+deactivate Slack
+
+activate eZ
+eZ --> eZ: Check Token
+eZ --> eZ: Exectute Action
+eZ --> Slack: Update Message
+deactivate eZ
+
+activate Slack
+Slack --> Slack: Display Message
+Alice --> Slack: See/Interact with Message
+deactivate Slack
+
+
+@enduml

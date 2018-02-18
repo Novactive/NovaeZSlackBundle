@@ -1,0 +1,56 @@
+<?php
+/**
+ * NovaeZSlackBundle Bundle.
+ *
+ * @package   Novactive\Bundle\eZSlackBundle
+ *
+ * @author    Novactive <s.morel@novactive.com>
+ * @copyright 2018 Novactive
+ * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
+ */
+
+namespace Novactive\Bundle\eZSlackBundle\DependencyInjection;
+
+use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ConfigurationProcessor;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+
+/**
+ * Class NovaeZSlackExtension.
+ */
+class NovaeZSlackExtension extends Extension
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getAlias(): string
+    {
+        return 'nova_ezslack';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function load(array $configs, ContainerBuilder $container): void
+    {
+        $configuration = $this->getConfiguration($configs, $container);
+        $config        = $this->processConfiguration($configuration, $configs);
+
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('default_settings.yml');
+        $loader->load('services.yml');
+        $loader->load('interactions_services.yml');
+
+        $processor = new ConfigurationProcessor($container, $this->getAlias());
+        $processor->mapSetting('slack_verification_token', $config);
+        $processor->mapSetting('asset_prefix', $config);
+        $processor->mapSetting('favicon', $config);
+        $processor->mapSetting('site_name', $config);
+        $processor->mapSetting('notifications', $config);
+        $processor->mapSetting('styles', $config);
+        $processor->mapConfigArray('notifications', $config);
+        $processor->mapConfigArray('styles', $config);
+    }
+}

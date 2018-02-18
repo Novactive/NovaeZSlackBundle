@@ -1,0 +1,49 @@
+@startuml
+
+title Simplified Slack Models
+
+class Attachment {
+    Field[] $fields
+    Action[] $actions
+    ----
+    ...
+}
+
+abstract class Action {
+    string $name
+    string $text
+    string $value
+}
+
+Button <|-- Action
+Select <|-- Action
+
+class Field {
+    string $name
+    string $value
+}
+
+class Message {
+    string $text
+    Attachment[] $attachments
+}
+
+class InteractiveMessage <<Response>> {
+    Action $action
+    Message $originalMessage
+    ---
+    string $token
+    Channel $channel
+    Team $team
+    User $user
+}
+
+
+Message - Attachment
+Attachment - Action
+Attachment -- Field
+
+InteractiveMessage -- Action
+InteractiveMessage -- Message
+
+@enduml

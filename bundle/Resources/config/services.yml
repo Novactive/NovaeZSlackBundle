@@ -1,0 +1,62 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        public: false
+        bind:
+            $jmsSerializer: '@jms_serializer'
+            $configResolver: '@ezpublish.config.resolver'
+
+
+    Novactive\Bundle\eZSlackBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
+
+    Novactive\Bundle\eZSlackBundle\Command\:
+        resource: '../../Command/*'
+        tags: ["console.command"]
+
+    Novactive\Bundle\eZSlackBundle\Core\Slack\Responder\:
+        resource: '../../Core/Slack/Responder/*'
+        exclude: '../../Core/Slack/Responder/FirstResponder.php'
+        tags: ["novaezslack.command.responder"]
+
+    Novactive\Bundle\eZSlackBundle\Core\Slack\Responder\FirstResponder:
+        arguments: [!tagged novaezslack.command.responder]
+
+    Novactive\Bundle\eZSlackBundle\Core\Client\Slack: ~
+    Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider: ~
+
+    # Converters
+    Novactive\Bundle\eZSlackBundle\Core\Converter\Message: ~
+    Novactive\Bundle\eZSlackBundle\Core\Converter\Query: ~
+    Novactive\Bundle\eZSlackBundle\Core\Converter\Attachment:
+        $siteAccessList: "%ezpublish.siteaccess.list%"
+
+    # Listeners
+    Novactive\Bundle\eZSlackBundle\Listener\Request:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+
+    # Native or 3rd party
+    Symfony\Component\Translation\TranslatorInterface:
+        alias: translator
+
+    eZ\Publish\Core\FieldType\RichText\Converter:
+        alias: ezpublish.fieldType.ezrichtext.converter.output.xhtml5
+
+    nova_ezslack.guzzle.client:
+        class: GuzzleHttp\Client
+
+    # Signals
+    Novactive\Bundle\eZSlackBundle\Core\Dispatcher:
+        tags:
+            - { name: ezpublish.api.slot, signal: ContentService\PublishVersionSignal }
+            - { name: ezpublish.api.slot, signal: LocationService\HideLocationSignal }
+            - { name: ezpublish.api.slot, signal: LocationService\UnhideLocationSignal }
+            - { name: ezpublish.api.slot, signal: TrashService\TrashSignal }
+            - { name: ezpublish.api.slot, signal: TrashService\RecoverSignal }
+            - { name: ezpublish.api.slot, signal: ObjectStateService\SetContentStateSignal }
+
+

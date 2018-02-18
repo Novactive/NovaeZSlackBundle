@@ -1,0 +1,24 @@
+parameters:
+    nova_ezslack.default.asset_prefix: ~
+    nova_ezslack.default.favicon: ~
+    nova_ezslack.default.site_name: ~
+    nova_ezslack.default.notifications:
+        channels: []
+    nova_ezslack.default.field_identifiers:
+        description:
+            - "short_description"
+            - "intro"
+            - "caption"
+            - "description"
+        image:
+            - "picture"
+            - "image"
+            - "logo"
+
+    nova_ezslack.default.styles:
+        attachment:
+            content: "#ff9900"
+            details: "#cccccc"
+            preview: "#ff9900"
+            actions: "#00ddff"
+
