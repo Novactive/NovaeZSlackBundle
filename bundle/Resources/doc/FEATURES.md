@@ -57,19 +57,28 @@ allowing you to crazy search like:
 
 ## Screenshots
 
-![Confirmation]
+### Messages
+
 ![Message1]
 ![Message2]
+
+### Confirmation
+
+![Confirmation]
+
+### Selects
 ![PublicationChain]
+
+### Search Command
 ![Search]
 
 
 
-[Confirmation]: images/Confirmation.png.png
+[Confirmation]: images/Confirmation.png
 [Message1]: images/Message1.png
 [Message2]: images/Message2.png
 [PublicationChain]: images/PublicationChain.png
-[Search]: images/search.png.png
+[Search]: images/search.png
 [Doc-Commands]: images/Commands.png
 [Doc-Interactions]: images/Interactions.png
 [Doc-Models]: images/Models.png

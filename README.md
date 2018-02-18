@@ -4,7 +4,7 @@ Novactive eZ Slack Bundle is an eZ Platform bundle that provides a complete Slac
 
 ## Features
 
-[Implemented](bundle/Resources/doc/FEATURES.md)
+[Features](bundle/Resources/doc/FEATURES.md)
 
 ## Usage and installation instructions
 
