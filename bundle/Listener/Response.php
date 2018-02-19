@@ -50,19 +50,19 @@ class Response
      */
     public function onKernelResponse(FilterResponseEvent $event): void
     {
-        $response   = $event->getResponse();
-        $connectURL = $this->clientRegistry->getClient('slack')->redirect(
+        $response         = $event->getResponse();
+        $connectURL       = $this->clientRegistry->getClient('slack')->redirect(
             ['identity.basic', 'identity.email', 'identity.team', 'identity.avatar']
         )->getTargetUrl();
-        $slackHost  = 'https://platform.slack-edge.com';
-        $code       = <<<END
+        $slackAssetPrefix = 'https://platform.slack-edge.com';
+        $code             = <<<END
 <script type="text/javascript">
 $(function () {
 "use strict";
 var slackButton = $("<a/>").attr({href:"{$connectURL}", class: "", style:"margin-top:0.95rem; display:inline-block"});
 var slackImage = $("<img/>").attr({
-src: "https://{$slackHost}/img/sign_in_with_slack.png",
-srcset: "https://{$slackHost}/img/sign_in_with_slack.png 1x, https://{$slackHost}/img/sign_in_with_slack@2x.png 2x",
+src: "{$slackAssetPrefix}/img/sign_in_with_slack.png",
+srcset: "{$slackAssetPrefix}/img/sign_in_with_slack.png 1x, {$slackAssetPrefix}/img/sign_in_with_slack@2x.png 2x",
 height: 40,
 width: 172
 });
