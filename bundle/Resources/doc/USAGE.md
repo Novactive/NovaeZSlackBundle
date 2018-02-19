@@ -4,19 +4,7 @@
 
 ## Basic Configuration
 
-```yml
-nova_ezslack:
-    system:
-        default:
-            slack_verification_token: "XXXX"
-            site_name: "novactive.us"
-            favicon: "https://assets.novactive.us/images/icos/favicon.ico"
-            asset_prefix: "https://assets.novactive.us"
-            notifications:
-                channels:
-                    - "https://hooks.slack.com/services/XXXX"
-```
-
+TODO - reexplain config
 
 ## Create your own interactions
 

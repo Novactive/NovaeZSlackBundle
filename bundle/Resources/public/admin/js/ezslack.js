@@ -1,29 +1,19 @@
-document.addEventListener("DOMContentLoaded", function (event) {
+$(function () {
     "use strict";
-    var link = document.getElementById("novaezslack_shareonslack-tab");
-    var icon = document.createElement("img");
-    icon.setAttribute("src", "/bundles/novaezslack/admin/images/slack.svg");
-    icon.setAttribute("height", "30");
-    icon.setAttribute("width", "30");
-    link.insertBefore(document.createElement("br"),link.firstChild);
-    link.insertBefore(icon, link.firstChild);
-    link.addEventListener("click", function (e) {
-        var isDisabled = link.getAttribute('disabled') === 'disabled';
-        if (isDisabled) {
-            e.preventDefault();
-            return;
+    var $link = $("#novaezslack_shareonslack-tab");
+    var $icon = $("<img/>").attr({src: "/bundles/novaezslack/admin/images/slack.svg", width: 30, height: 30});
+    var $br = $("<br />");
+    $br.prependTo($link);
+    $icon.prependTo($link);
+    $link.on('click', function () {
+        if ($(this).attr('disabled') !== 'disabled') {
+            $.ajax({
+                url: $link.attr('href'),
+                success: function () {
+                    $link.attr('disabled', 'disabled');
+                }
+            });
         }
-        var endpoint = link.getAttribute('href');
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', endpoint);
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                link.setAttribute('disabled', 'disabled');
-            }
-        };
-        xhr.send();
-        e.preventDefault();
+        return false;
     });
-
-
 });

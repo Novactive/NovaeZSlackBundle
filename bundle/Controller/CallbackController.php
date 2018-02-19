@@ -37,6 +37,12 @@ class CallbackController
     /**
      * @Route("/command", name="novactive_ezslack_callback_command")
      * @Method({"POST"})
+     *
+     * @param Request        $request
+     * @param FirstResponder $firstResponder
+     * @param Serializer     $jmsSerializer
+     *
+     * @return JsonResponse
      */
     public function commandAction(
         Request $request,
@@ -51,18 +57,19 @@ class CallbackController
     /**
      * @Route("/message", name="novactive_ezslack_callback_message")
      * @Method({"POST"})
+     *
+     * @param Request    $request
+     * @param Serializer $jmsSerializer
+     * @param Provider   $provider
+     *
+     * @return JsonResponse
      */
     public function messageAction(
         Request $request,
         Serializer $jmsSerializer,
-        Provider $provider,
-        Repository $repository
+        Provider $provider
     ): JsonResponse {
         // has been decoded and checked in the RequestListener already
-        //@todo: add a conf to set a Slack User, in the futur try to map Slack User with eZ, Slack connect?
-        $currentUser = $repository->getPermissionResolver()->getCurrentUserReference();
-        $admin       = $repository->getUserService()->loadUser(14);
-        $repository->getPermissionResolver()->setCurrentUserReference($admin);
         /** @var InteractiveMessage $interactiveMessage */
         $interactiveMessage = $request->attributes->get('interactiveMessage');
         $attachment         = $provider->execute($interactiveMessage);
@@ -74,9 +81,7 @@ class CallbackController
             $originalMessage->removeAttachmentAtIndex((int) $interactiveMessage->getAttachmentIndex() - 1);
         }
         $originalMessage->addAttachment($attachment);
-
         $newPayload = $jmsSerializer->serialize($originalMessage, 'json');
-        $repository->getPermissionResolver()->setCurrentUserReference($currentUser);
 
         return new JsonResponse($newPayload, 200, [], true);
     }
@@ -84,6 +89,14 @@ class CallbackController
     /**
      * @Route("/share/{locationId}", name="novactive_ezslack_callback_shareonslack")
      * @Method({"GET"})
+     *
+     * @param Request     $request
+     * @param int         $locationId
+     * @param ChainRouter $router
+     * @param Dispatcher  $dispatcher
+     * @param Repository  $repository
+     *
+     * @return JsonResponse|RedirectResponse
      */
     public function shareOnSlackAction(
         Request $request,

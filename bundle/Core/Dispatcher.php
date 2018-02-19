@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core;
 
-use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\SignalSlot\Signal;
 use eZ\Publish\Core\SignalSlot\Slot as BaseSlot;
 use Novactive\Bundle\eZSlackBundle\Core\Client\Slack;
@@ -34,22 +33,15 @@ class Dispatcher extends BaseSlot
     private $messageConverter;
 
     /**
-     * @var Repository
-     */
-    private $repository;
-
-    /**
      * Dispatcher constructor.
      *
      * @param Slack            $slackClient
      * @param MessageConverter $messageConverter
-     * @param Repository       $repository
      */
-    public function __construct(Slack $slackClient, MessageConverter $messageConverter, Repository $repository)
+    public function __construct(Slack $slackClient, MessageConverter $messageConverter)
     {
         $this->slackClient      = $slackClient;
         $this->messageConverter = $messageConverter;
-        $this->repository       = $repository;
     }
 
     /**
@@ -57,11 +49,7 @@ class Dispatcher extends BaseSlot
      */
     public function receive(Signal $signal): void
     {
-        $currentUser = $this->repository->getPermissionResolver()->getCurrentUserReference();
-        $admin       = $this->repository->getUserService()->loadUser(14);
-        $this->repository->getPermissionResolver()->setCurrentUserReference($admin);
         $message = $this->messageConverter->convert($signal);
         $this->slackClient->sendNotification($message);
-        $this->repository->getPermissionResolver()->setCurrentUserReference($currentUser);
     }
 }

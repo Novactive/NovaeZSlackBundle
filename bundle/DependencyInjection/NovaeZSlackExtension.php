@@ -49,6 +49,8 @@ class NovaeZSlackExtension extends Extension
         $container->setParameter('assetic.bundles', $asseticBundles);
 
         $processor = new ConfigurationProcessor($container, $this->getAlias());
+        $processor->mapSetting('slack_client_id', $config);
+        $processor->mapSetting('slack_client_secret', $config);
         $processor->mapSetting('slack_verification_token', $config);
         $processor->mapSetting('asset_prefix', $config);
         $processor->mapSetting('favicon', $config);

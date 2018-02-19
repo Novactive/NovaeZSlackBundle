@@ -29,7 +29,11 @@ class Configuration extends SiteAccessAware\Configuration
         $rootNode    = $treeBuilder->root('nova_ezslack');
         $systemNode  = $this->generateScopeBaseNode($rootNode);
         $systemNode
+            ->scalarNode('slack_client_id')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('slack_client_secret')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('slack_verification_token')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('slackconnect_usergroup_location_id')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('slackconnect_contenttype_identifier')->cannotBeEmpty()->end()
             ->scalarNode('asset_prefix')->end()
             ->scalarNode('favicon')->end()
             ->scalarNode('site_name')->end()

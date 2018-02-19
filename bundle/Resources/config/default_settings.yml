@@ -1,4 +1,5 @@
 parameters:
+    nova_ezslack.default.slackconnect_contenttype_identifier: 'user'
     nova_ezslack.default.asset_prefix: ~
     nova_ezslack.default.favicon: ~
     nova_ezslack.default.site_name: ~

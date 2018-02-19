@@ -36,13 +36,14 @@ public function registerBundles()
        new FrameworkBundle(),
        ...
        new JMS\SerializerBundle\JMSSerializerBundle(),
+       new KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle(),
        new Novactive\Bundle\eZSlackBundle\NovaeZSlackBundle(),
    );
    ...
 }
 ```
 
-> If you already have _JMSSerializerBundle_ do not add it one more time.
+> If you already have _JMSSerializerBundle_ or  _KnpUOAuth2ClientBundle_ do not add them a second time.
 
 
 ### Add routes
@@ -56,5 +57,38 @@ _novaezslack_routes:
     resource: "@NovaeZSlackBundle/Controller"
     type:     annotation
     prefix:   /_novaezslack
+
+_novaezslack_slack_oauth_check:
+    path: /_novaezslack/auth/check
+```
+
+### Add configuration
+
+Make sure you adapt the configuration
+
+```yml
+# app/config/config.yml
+
+nova_ezslack:
+    system:
+        default:
+            slack_client_id: "SLACK_APP_CLIENT ID"
+            slack_client_secret: "SLACK_APP_CLIENT_SECRET"
+            slack_verification_token: "SLACK_APP_VERIFICATION_TOKEN"
+            site_name: "novactive.us"
+            favicon: "https://assets.novactive.us/images/icos/favicon.ico"
+            asset_prefix: "https://assets.novactive.us"
+            notifications:
+                channels:
+                    - "https://hooks.slack.com/services/XXXX"
+
+knpu_oauth2_client:
+    clients:
+        slack:
+            type: slack
+            redirect_route: _novaezslack_slack_oauth_check
+            client_id: "#" # will be overridden by ConfigResolver - this value does not matter
+            client_secret: "#" # will be overridden by ConfigResolver - this value does not matter
+
 ```
 

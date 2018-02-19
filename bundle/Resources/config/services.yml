@@ -26,8 +26,11 @@ services:
 
     Novactive\Bundle\eZSlackBundle\Core\Client\Slack: ~
     Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider: ~
+    Novactive\Bundle\eZSlackBundle\Security\SlackAuthenticator: ~
+    Novactive\Bundle\eZSlackBundle\Repository\User: ~
 
     # Converters
+    Novactive\Bundle\eZSlackBundle\Core\Converter\User: ~
     Novactive\Bundle\eZSlackBundle\Core\Converter\Message: ~
     Novactive\Bundle\eZSlackBundle\Core\Converter\Query: ~
     Novactive\Bundle\eZSlackBundle\Core\Converter\Attachment:
@@ -37,6 +40,10 @@ services:
     Novactive\Bundle\eZSlackBundle\Listener\Request:
         tags:
             - { name: kernel.event_listener, event: kernel.request }
+
+    Novactive\Bundle\eZSlackBundle\Listener\Response:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response }
 
     Novactive\Bundle\eZSlackBundle\Listener\MenuContentSidebarRight:
         tags:
@@ -51,6 +58,15 @@ services:
 
     nova_ezslack.guzzle.client:
         class: GuzzleHttp\Client
+
+    knpu.oauth2.provider_factory:
+        class: Novactive\Bundle\eZSlackBundle\OAuth\ProviderFactory
+        arguments: ["@router"]
+
+    # HERE ONLY TO FIX A BUG: https://github.com/ezsystems/ezplatform-admin-ui/pull/353
+    Novactive\Bundle\eZSlackBundle\Core\UIConfigProviderUser:
+        tags:
+            - { name: ezplatform.admin_ui.config_provider, key: 'user' }
 
     # Signals
     Novactive\Bundle\eZSlackBundle\Core\Dispatcher:
