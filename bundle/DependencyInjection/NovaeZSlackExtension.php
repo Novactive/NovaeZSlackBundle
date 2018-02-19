@@ -52,6 +52,8 @@ class NovaeZSlackExtension extends Extension
         $processor->mapSetting('slack_client_id', $config);
         $processor->mapSetting('slack_client_secret', $config);
         $processor->mapSetting('slack_verification_token', $config);
+        $processor->mapSetting('slackconnect_usergroup_content_id', $config);
+        $processor->mapSetting('slackconnect_contenttype_identifier', $config);
         $processor->mapSetting('asset_prefix', $config);
         $processor->mapSetting('favicon', $config);
         $processor->mapSetting('site_name', $config);

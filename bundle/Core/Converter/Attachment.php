@@ -285,12 +285,12 @@ class Attachment
             if (null !== $value && $value instanceof ImageValue) {
                 return ($this->getParameter('asset_prefix') ?? '').$value->uri;
             }
-            if (null !== $value && $value instanceof RelationListValue) {
+            if (null !== $value && $value instanceof RelationListValue && count($value->destinationContentIds) > 0) {
                 $image = $this->repository->getContentService()->loadContent($value->destinationContentIds[0]);
 
                 return $this->getPictureUrl($image);
             }
-            if (null !== $value && $value instanceof RelationValue) {
+            if (null !== $value && $value instanceof RelationValue && $value->destinationContentId > 0) {
                 $image = $this->repository->getContentService()->loadContent($value->destinationContentId);
 
                 return $this->getPictureUrl($image);

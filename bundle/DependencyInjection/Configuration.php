@@ -32,7 +32,7 @@ class Configuration extends SiteAccessAware\Configuration
             ->scalarNode('slack_client_id')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('slack_client_secret')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('slack_verification_token')->isRequired()->cannotBeEmpty()->end()
-            ->scalarNode('slackconnect_usergroup_location_id')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('slackconnect_usergroup_content_id')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('slackconnect_contenttype_identifier')->cannotBeEmpty()->end()
             ->scalarNode('asset_prefix')->end()
             ->scalarNode('favicon')->end()

@@ -14,6 +14,7 @@ namespace Novactive\Bundle\eZSlackBundle\Core\Converter;
 
 use AdamPaterson\OAuth2\Client\Provider\SlackResourceOwner;
 use eZ\Publish\API\Repository\Exceptions\BadStateException;
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\API\Repository\Values\User\User as ValueUser;
@@ -104,7 +105,7 @@ class User
             );
             $fieldCreateStruct->isSearchable   = true;
             $fieldCreateStruct->isTranslatable = false;
-            $fieldCreateStruct->isRequired     = true;
+            $fieldCreateStruct->isRequired     = false;
             foreach ($this->languages as $lang) {
                 $fieldCreateStruct->names[$lang] = 'Slack ID';
             }
@@ -117,7 +118,7 @@ class User
             );
             $fieldCreateStruct->isSearchable   = true;
             $fieldCreateStruct->isTranslatable = false;
-            $fieldCreateStruct->isRequired     = true;
+            $fieldCreateStruct->isRequired     = false;
             foreach ($this->languages as $lang) {
                 $fieldCreateStruct->names[$lang] = 'Slack Team ID';
             }
@@ -164,10 +165,10 @@ class User
         $userUpdateStruct->contentUpdateStruct = $contentUpdateStruct;
         $user                                  = $userService->updateUser($user, $userUpdateStruct);
 
-        $draft = $contentService->createContentDraft($user->contentInfo);
-        $contentService->publishVersion($draft->versionInfo);
+        $draft   = $contentService->createContentDraft($user->contentInfo);
+        $content = $contentService->publishVersion($draft->versionInfo);
 
-        return $userService->loadUsersByEmail($resource->getEmail())[0];
+        return $userService->loadUser($content->id);
     }
 
     /**
@@ -192,7 +193,7 @@ class User
         $userCreateStruct = $userService->newUserCreateStruct(
             $resource->getEmail(),
             $resource->getEmail(),
-            $resource->getEmail(),
+            md5(uniqid($resource->getId(), true)),
             $this->languages[0],
             $contentType
         );
@@ -205,14 +206,14 @@ class User
             $fieldValue = $attributes[$fieldName];
             $userCreateStruct->setField($fieldName, $fieldValue);
         }
-        $group = $userService->loadUserGroup($this->getParameter('slackconnect_usergroup_location_id'));
+        $group = $userService->loadUserGroup($this->getParameter('slackconnect_usergroup_content_id'));
         $user  = $userService->createUser($userCreateStruct, [$group]);
 
         $contentService = $this->repository->getContentService();
         $draft          = $contentService->createContentDraft($user->contentInfo);
-        $contentService->publishVersion($draft->versionInfo);
+        $content        = $contentService->publishVersion($draft->versionInfo);
 
-        return $userService->loadUsersByEmail($resource->getEmail())[0];
+        return $userService->loadUser($content->id);
     }
 
     /**
@@ -237,8 +238,14 @@ class User
                 );
 
                 if (null === $existingUser) {
-                    $existingUser = $userService->loadUsersByEmail($userEmail);
-                    $existingUser = $existingUser[0] ?? null;
+                    try {
+                        $existingUser = $userService->loadUserByLogin($userEmail);
+                    } catch (NotFoundException $e) {
+                        if (null === $existingUser) {
+                            $existingUser = $userService->loadUsersByEmail($userEmail);
+                            $existingUser = $existingUser[0] ?? null;
+                        }
+                    }
                 }
 
                 return (null === $existingUser) ? $this->createUser($resource) : $this->updateUser(
