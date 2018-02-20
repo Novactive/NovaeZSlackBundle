@@ -1,4 +1,4 @@
-# Install
+# Installation
 
 
 ## Requirements
@@ -6,20 +6,19 @@
 * eZ Platform 2+
 * PHP 7.2+
 
-
 ## Installation steps
 
 There are 2 phases:
 
-- create the Slack Application for your workspace
-- install the Bundle and configure it according to the Slack application
+- [create the Slack Application](#slack-application) for your workspace.
+- [install the Bundle and configure it](#bundle) according to the Slack application.
 
 
 ### Slack Application
 
 First you need to create a Slack app here: https://api.slack.com/apps
 
-Once created we need to go through some steps to connect it to your eZ Platform, you should see this screen.
+Once created you need to go through some steps to connect it to your eZ Platform, you should see this screen.
 
 ![Step1]
 
@@ -27,21 +26,22 @@ Let's go on the first item in the middle of the page "Add features and functiona
 
 ![Step2]
 
-You will have to do something in each of this circled items.
+You will have to do something in each of this circled items above.
 
 #### Incoming Webhooks
 
 ![Step3]
 
-That is basically here that you are going to configure how eZ will be able to send Message in your channel. 
-One webhook == One channel, you course you can create multiple Incoming Webhooks and setup the bundle to send Message
+That is basically here that you are going to configure how eZ will be able to send Message in your channel(s). 
+
+`1 webhook` **==** `1 channel`, of course you can create multiple Incoming Webhooks and setup the bundle to send Message
 in each of them.
 
-> in the `notifications.channels` array
+> Config in the `notifications.channels` array
 
 #### Interactive Components
 
-On left select "Interactive Components" and provide an URL to your website(a callback). That is the first URL on which 
+On the left select "Interactive Components" and provide an URL to your website(a callback). That is the first URL on which 
 Slack will communicate with eZ.
 
 Just change the "HOST" in the following, this bundle provides the routes, you should fill in something like:
@@ -50,14 +50,14 @@ Just change the "HOST" in the following, this bundle provides the routes, you sh
 
 ![Step4]
 
-> again keep the `/_novaezslack/message` suffix that is mandatory.
+> keep the `/_novaezslack/message` suffix that is mandatory.
 
 #### Slash Commands
 
 ![Step5]
 
 Still on the left "Slash Commands" and provide an URL to your website(a callback). That is the second URL on which Slack
-will communicate with eZ.
+will communicate with eZ (for Commands this time).
  
 ![Step6]
 
