@@ -178,13 +178,15 @@ class User
      */
     private function createUser(SlackResourceOwner $resource): ValueUser
     {
-        $attributes  = [
-            'last_name'                   => $resource->getLastName(),
-            'first_name'                  => $resource->getFirstName(),
+        list($first, $last) = explode(" ", $resource->getRealName(), 2);
+        $attributes = [
+            'last_name'                   => $first,
+            'first_name'                  => $last,
             'signature'                   => $resource->getProfile()['title'] ?? '',
             UserRepository::SLACK_ID      => $resource->getId(),
             UserRepository::SLACK_TEAM_ID => $resource->getProfile()['team'],
         ];
+
         $contentType = $this->repository->getContentTypeService()->loadContentTypeByIdentifier(
             $this->getParameter('slackconnect_contenttype_identifier')
         );

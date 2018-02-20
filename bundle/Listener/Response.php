@@ -52,7 +52,7 @@ class Response
     {
         $response         = $event->getResponse();
         $connectURL       = $this->clientRegistry->getClient('slack')->redirect(
-            ['identity.basic', 'identity.email', 'identity.team', 'identity.avatar']
+            ['team:read', 'users.profile:read', 'users:read', 'users:read.email']
         )->getTargetUrl();
         $slackAssetPrefix = 'https://platform.slack-edge.com';
         $code             = <<<END

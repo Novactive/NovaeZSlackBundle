@@ -17,6 +17,65 @@ There are 2 phases:
 
 ### Slack Application
 
+First you need to create a Slack app here: https://api.slack.com/apps
+
+Once created we need to go through some steps to connect it to your eZ Platform, you should see this screen.
+
+![Step1]
+
+Let's go on the first item in the middle of the page "Add features and functionality".
+
+![Step2]
+
+You will have to do something in each of this circled items.
+
+#### Incoming Webhooks
+
+![Step3]
+
+That is basically here that you are going to configure how eZ will be able to send Message in your channel. 
+One webhook == One channel, you course you can create multiple Incoming Webhooks and setup the bundle to send Message
+in each of them.
+
+> in the `notifications.channels` array
+
+#### Interactive Components
+
+On left select "Interactive Components" and provide an URL to your website(a callback). That is the first URL on which 
+Slack will communicate with eZ.
+
+Just change the "HOST" in the following, this bundle provides the routes, you should fill in something like:
+
+`https://HOST/_novaezslack/message`
+
+![Step4]
+
+> again keep the `/_novaezslack/message` suffix that is mandatory.
+
+#### Slash Commands
+
+![Step5]
+
+Still on the left "Slash Commands" and provide an URL to your website(a callback). That is the second URL on which Slack
+will communicate with eZ.
+ 
+![Step6]
+
+The command `/command` is up to you, it is not mandatory to use `/ez`. 
+For the **Request URL**, just change the "HOST" in the following, this bundle provides the routes, you should fill in 
+something like:
+                        
+`https://HOST/_novaezslack/command`
+
+
+#### OAuth & Permissions
+
+One more step to set the OAuth authentication, on the left "OAuth & Permissions", make sure to provide a valid URL.
+
+![Step7]
+
+> The real callback is `https://HOST/_novaezslack/auth/check` but you don't want to set that up as you want to manage
+multiple SiteAccess then it is fine just to mention the base url here.
 
 ### Bundle
 
@@ -92,3 +151,10 @@ knpu_oauth2_client:
 
 ```
 
+[Step1]: images/NovaeZSlack-Step1.png
+[Step2]: images/NovaeZSlack-Step2.png
+[Step3]: images/NovaeZSlack-Step3.png
+[Step4]: images/NovaeZSlack-Step4.png
+[Step5]: images/NovaeZSlack-Step5.png
+[Step6]: images/NovaeZSlack-Step6.png
+[Step7]: images/NovaeZSlack-Step7.png
