@@ -55,10 +55,15 @@ class Recover extends ActionProvider
         try {
             $query         = new eZQuery();
             $query->filter = new Criterion\ContentId($value);
+            // too bad what have to limit and to check the ID, the TrashService is not finish...
+            // See: https://github.com/ezsystems/ezpublish-kernel/blob/master/eZ/Publish/Core/Persistence/Legacy/Content/Location/Trash/Handler.php#L183
+            $query->limit  = 1000;
             $results       = $this->repository->getTrashService()->findTrashItems($query);
             foreach ($results as $item) {
                 /* @var TrashItem $item */
-                $this->repository->getTrashService()->recover($item);
+                if ($item->contentInfo->id === $value) {
+                    $this->repository->getTrashService()->recover($item);
+                }
             }
             $attachment->setColor('good');
             $attachment->setText('_t:action.items.recovered');
