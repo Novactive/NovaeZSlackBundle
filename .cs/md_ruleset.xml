@@ -25,12 +25,6 @@
             <property name="reportLevel" value="20"/>
         </properties>
     </rule>
-    <rule ref="rulesets/codesize.xml/NPathComplexity">
-        <priority>1</priority>
-        <properties>
-            <property name="minimum" value="1025"/>
-        </properties>
-    </rule>
     <rule ref="rulesets/codesize.xml/TooManyMethods">
         <priority>1</priority>
         <properties>

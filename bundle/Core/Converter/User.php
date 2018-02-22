@@ -178,8 +178,8 @@ class User
      */
     private function createUser(SlackResourceOwner $resource): ValueUser
     {
-        list($first, $last) = explode(" ", $resource->getRealName(), 2);
-        $attributes = [
+        list($first, $last) = explode(' ', $resource->getRealName(), 2);
+        $attributes         = [
             'last_name'                   => $first,
             'first_name'                  => $last,
             'signature'                   => $resource->getProfile()['title'] ?? '',

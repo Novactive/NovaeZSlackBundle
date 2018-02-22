@@ -195,7 +195,7 @@ class Attachment
      *
      * @return Attachment
      */
-    public function setFallback(string $fallback): self
+    public function setFallback(?string $fallback = null): self
     {
         $this->fallback = $fallback;
 
@@ -275,7 +275,7 @@ class Attachment
      *
      * @return Attachment
      */
-    public function setTitle(string $title): self
+    public function setTitle(?string $title = null): self
     {
         $this->title = $title;
 
@@ -315,7 +315,7 @@ class Attachment
      *
      * @return Attachment
      */
-    public function setText(?string $text): self
+    public function setText(?string $text = null): self
     {
         $this->text = $text;
 

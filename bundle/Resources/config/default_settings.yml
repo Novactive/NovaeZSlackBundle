@@ -22,4 +22,7 @@ parameters:
             details: "#cccccc"
             preview: "#ff9900"
             actions: "#00ddff"
-
+            form: "#4B0082"
+            states: "#9932CC"
+            workflow: "#636945"
+            notifications: "#c4b636"

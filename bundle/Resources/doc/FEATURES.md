@@ -1,28 +1,12 @@
 # Features
 
-This bundle provides a deep Slack integration with eZ Platform.
-
-It provides 5 high-level features that you can declined to build unlimited concrete collaboration features:
-
-- **Slack Connect**: to allow user to login in eZ via Slack and to recognize a Slack user in eZ. (mapping with 
-role & permissions)
-- **Incoming Webhooks**: to allow eZ to post Message (notifications) in one(or more) channel(s) in your Slack workspace.
-- **Interactive Components**: to allow you to add Button (and more types) to your Message to create interactive 
-experiences for your users.
-- **Slash Commands**: to allow your users to trigger actions from Slack into your eZ.
-- **_(Soon)_**: Event Subscriptions: Your eZ will be able to listen channels and interact with you users.
-
-> Yes, we can vulgarize and say that it is a Chat Bot
-
-**This bundle simplify drastically the work you have to do to manage your own interactions between your eZ and your 
-Slack workspace.**
-
-On top of those high-level features, this bundle provides default interactions and commands:
-
 ## Interactive Messages 
 
 When an Content is `published`, `hid`, `unhid`, `trashed`, `recovered` or change of `states` (extendable by 
 configuration) a Message will be sent to the configured Channels.
+
+If you are using eZ Platform Enterprise, this bundle is wired to the Form Builder and the Notification Center of eZ to 
+send Interactive Message on events. 
 
 ![Message1]
 

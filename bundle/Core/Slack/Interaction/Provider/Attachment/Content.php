@@ -42,16 +42,23 @@ class Content extends AttachmentProvider
      */
     public function getAttachment(Signal $signal): ?Attachment
     {
+        $contentId = 0;
         if (isset($signal->contentId)) {
+            $contentId = $signal->contentId;
+        } elseif (isset($signal->data)) {
+            $contentId = $signal->data['content_id'] ?? $signal->data['contentId'] ?? 0;
+        }
+
+        if ($contentId > 0) {
             if ('novaezslack.provider.main' === $this->getAlias()) {
-                return $this->converter->getMain((int) $signal->contentId);
+                return $this->converter->getMain($contentId);
             }
 
             if ('novaezslack.provider.details' === $this->getAlias() && !$signal instanceof SearchedSignal) {
-                return $this->converter->getDetails((int) $signal->contentId);
+                return $this->converter->getDetails($contentId);
             }
             if ('novaezslack.provider.preview' === $this->getAlias() && !$signal instanceof SearchedSignal) {
-                return $this->converter->getPreview((int) $signal->contentId);
+                return $this->converter->getPreview($contentId);
             }
         }
 

@@ -42,8 +42,15 @@ class NovaeZSlackExtension extends Extension
         $loader->load('ezadminui.yml');
         $loader->load('default_settings.yml');
         $loader->load('services.yml');
-        $loader->load('interactions_services.yml');
+        $activatedBundles = array_keys($container->getParameter('kernel.bundles'));
 
+        if (\in_array('EzSystemsFormBuilderBundle', $activatedBundles, true)) {
+            $loader->load('interactions_services_formbuilder.yml');
+        }
+        if (\in_array('NotificationBundle', $activatedBundles, true)) {
+            $loader->load('interactions_services_notification.yml');
+        }
+        $loader->load('interactions_services.yml');
         $asseticBundles   = $container->getParameter('assetic.bundles');
         $asseticBundles[] = 'NovaeZSlackBundle';
         $container->setParameter('assetic.bundles', $asseticBundles);

@@ -8,7 +8,6 @@ services:
 
 
     # Define the providers
-
     novaezslack.attachment.provider.content.main:
         class: "%novaezslack.attachment.provider.content.class%"
         tags:
@@ -50,6 +49,10 @@ services:
     Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action\Recover:
         tags:
             - { name: "novaezslack.action.provider", alias: "recover", attachment: "basic-actions" }
+
+    Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action\Publish:
+        tags:
+            - { name: "novaezslack.action.provider", alias: "publish", attachment: "basic-actions" }
 
     Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action\PublicationChainChangeState:
         tags:

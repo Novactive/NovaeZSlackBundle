@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action;
 
-use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\SignalSlot\Signal;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Action;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Attachment;
@@ -26,26 +25,12 @@ use Novactive\Bundle\eZSlackBundle\Core\Slack\Select;
 class PublicationChainChangeState extends ActionProvider
 {
     /**
-     * @var Repository
-     */
-    private $repository;
-
-    /**
-     * Hide constructor.
-     *
-     * @param Repository $repository
-     */
-    public function __construct(Repository $repository)
-    {
-        $this->repository = $repository;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getAction(Signal $signal, int $index): ?Action
     {
-        if (!isset($signal->contentId) || $signal->contentId <= 1) {
+        $content = $this->getContentForSignal($signal);
+        if (null === $content) {
             return null;
         }
 
@@ -64,7 +49,7 @@ class PublicationChainChangeState extends ActionProvider
                 $select->addOption(
                     new Option(
                         $state->getNames()[$state->mainLanguageCode],
-                        "{$signal->contentId}:{$state->id}"
+                        "{$content->id}:{$state->id}"
                     )
                 );
             }

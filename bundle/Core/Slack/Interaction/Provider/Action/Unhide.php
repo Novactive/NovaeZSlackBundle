@@ -12,48 +12,33 @@ declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action;
 
-use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\SignalSlot\Signal;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Action;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Attachment;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Button;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\InteractiveMessage;
 
+/**
+ * Class Unhide.
+ */
 class Unhide extends ActionProvider
 {
-    /**
-     * @var Repository
-     */
-    private $repository;
-
-    /**
-     * Hide constructor.
-     *
-     * @param Repository $repository
-     */
-    public function __construct(Repository $repository)
-    {
-        $this->repository = $repository;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function getAction(Signal $signal, int $index): ?Action
     {
-        if (!isset($signal->contentId) || $signal->contentId <= 1) {
+        $content = $this->getContentForSignal($signal);
+        if (null === $content || !$content->contentInfo->published ||
+            $signal instanceof Signal\TrashService\TrashSignal) {
             return null;
         }
-        $content = $this->repository->getContentService()->loadContent($signal->contentId);
-        if (!$content->contentInfo->published) {
-            return null;
-        }
+
         $location = $this->repository->getLocationService()->loadLocation($content->contentInfo->mainLocationId);
         if (!$location->hidden) {
             return null;
         }
-        $value  = $signal->contentId;
-        $button = new Button($this->getAlias(), '_t:action.unhide', (string) $value);
+        $button = new Button($this->getAlias(), '_t:action.unhide', (string) $content->id);
         $button->setStyle(Button::PRIMARY_STYLE);
 
         return $button;

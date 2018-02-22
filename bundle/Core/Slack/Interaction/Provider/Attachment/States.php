@@ -30,7 +30,6 @@ class States extends AttachmentProvider
             return null;
         }
         $attachment = new Attachment();
-        $attachment->setColor('#9932CC');
         $attachment->setText('_t:provider.states');
         $actions = $this->buildActions($signal);
         if (\count($actions) <= 0) {
@@ -38,6 +37,7 @@ class States extends AttachmentProvider
         }
         $attachment->setActions($actions);
         $attachment->setCallbackId($this->getAlias().'.'.time());
+        $this->attachmentDecorator->decorate($attachment, 'states');
 
         return $attachment;
     }
