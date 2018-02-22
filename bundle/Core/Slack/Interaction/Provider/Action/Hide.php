@@ -29,9 +29,10 @@ class Hide extends ActionProvider
     public function getAction(Signal $signal, int $index): ?Action
     {
         $content = $this->getContentForSignal($signal);
-        if (null === $content || !$content->contentInfo->published) {
+        if (null === $content || !$content->contentInfo->published || null === $content->contentInfo->mainLocationId) {
             return null;
         }
+
         $location = $this->repository->getLocationService()->loadLocation($content->contentInfo->mainLocationId);
         if ($location->hidden) {
             return null;

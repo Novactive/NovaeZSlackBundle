@@ -29,7 +29,7 @@ class Unhide extends ActionProvider
     public function getAction(Signal $signal, int $index): ?Action
     {
         $content = $this->getContentForSignal($signal);
-        if (null === $content || !$content->contentInfo->published ||
+        if (null === $content || !$content->contentInfo->published || null === $content->contentInfo->mainLocationId ||
             $signal instanceof Signal\TrashService\TrashSignal) {
             return null;
         }
