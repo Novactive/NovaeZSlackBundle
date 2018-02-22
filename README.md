@@ -4,7 +4,7 @@ Novactive eZ Slack Bundle is an eZ Platform bundle that provides a complete Slac
 
 This bundle provides a deep Slack integration.
 
-It provides 5 high-level features that you can declined to build unlimited concrete collaboration features:
+It provides 5 high-level features that you can decline to build unlimited concrete collaboration features:
 
 - **Slack Connect**: to allow user to login in eZ via Slack and to recognize a Slack user in eZ. (mapping with 
 roles & permissions)
