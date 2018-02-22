@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Attachment;
 
 use eZ\Publish\Core\SignalSlot\Signal;
+use Novactive\Bundle\eZSlackBundle\Core\Decorator\Attachment as AttachmentDecorator;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Action;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Attachment;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action\ActionProvider;
@@ -31,6 +32,25 @@ abstract class AttachmentProvider implements AttachmentProviderInterface
      * @var ActionProviderInterface[]
      */
     protected $actions;
+
+    /**
+     * @var AttachmentDecorator
+     */
+    protected $attachmentDecorator;
+
+    /**
+     * @required
+     *
+     * @param AttachmentDecorator $attachmentDecorator
+     *
+     * @return AttachmentProvider
+     */
+    public function setAttachmentDecorator(AttachmentDecorator $attachmentDecorator): self
+    {
+        $this->attachmentDecorator = $attachmentDecorator;
+
+        return $this;
+    }
 
     /**
      * @param ActionProviderInterface $action

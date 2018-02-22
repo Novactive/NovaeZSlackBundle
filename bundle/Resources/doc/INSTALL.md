@@ -94,6 +94,7 @@ public function registerBundles()
    $bundles = array(
        new FrameworkBundle(),
        ...
+       // NovaeZSlackBundle
        new JMS\SerializerBundle\JMSSerializerBundle(),
        new KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle(),
        new Novactive\Bundle\eZSlackBundle\NovaeZSlackBundle(),
@@ -150,6 +151,30 @@ knpu_oauth2_client:
             client_secret: "#" # will be overridden by ConfigResolver - this value does not matter
 
 ```
+
+### Add a Guard Authenticator to your Firewall
+
+In order to enable the Slack Connect you need to change your Firewall
+
+```yaml
+# app/config/security.yml
+
+        ezpublish_front:
+            guard:
+                authenticators:
+                    - Novactive\Bundle\eZSlackBundle\Security\SlackAuthenticator
+```
+
+
+### Add Rebuild the CSS etc.
+
+A simplication to run all the good commands (assets, dumps etc.).
+
+```bash
+composer install
+```
+
+Awesome! Your are done!
 
 [Step1]: images/NovaeZSlack-Step1.png
 [Step2]: images/NovaeZSlack-Step2.png

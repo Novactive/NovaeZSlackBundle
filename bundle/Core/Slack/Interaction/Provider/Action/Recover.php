@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action;
 
-use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\Query as eZQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\TrashItem;
@@ -29,21 +28,6 @@ use Novactive\Bundle\eZSlackBundle\Core\Slack\InteractiveMessage;
 class Recover extends ActionProvider
 {
     /**
-     * @var Repository
-     */
-    private $repository;
-
-    /**
-     * Hide constructor.
-     *
-     * @param Repository $repository
-     */
-    public function __construct(Repository $repository)
-    {
-        $this->repository = $repository;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getAction(Signal $signal, int $index): ?Action
@@ -51,8 +35,7 @@ class Recover extends ActionProvider
         if (!$signal instanceof Signal\TrashService\TrashSignal) {
             return null;
         }
-        $value  = $signal->contentId;
-        $button = new Button($this->getAlias(), '_t:action.recover', (string) $value);
+        $button = new Button($this->getAlias(), '_t:action.recover', (string) $signal->contentId);
         $button->setStyle(Button::PRIMARY_STYLE);
         $confirmation = new Confirmation('_t:action.generic.confirmation');
         $button->setConfirmation($confirmation);

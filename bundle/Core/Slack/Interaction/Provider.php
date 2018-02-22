@@ -63,6 +63,7 @@ class Provider
     {
         $attachments = [];
         foreach ($this->attachmentProviders as $provider) {
+            dump(\get_class($provider));
             $attachment = $provider->getAttachment($signal);
             if (null !== $attachment) {
                 $attachments[] = $attachment;

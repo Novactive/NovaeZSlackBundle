@@ -39,6 +39,8 @@ class BasicActions extends AttachmentProvider
         $attachment->setActions($actions);
         $attachment->setCallbackId($this->getAlias().'.'.time());
 
+        $this->attachmentDecorator->decorate($attachment);
+
         return $attachment;
     }
 }

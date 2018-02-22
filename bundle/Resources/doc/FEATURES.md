@@ -24,6 +24,9 @@ On top of those high-level features, this bundle provides default interactions a
 When an Content is `published`, `hid`, `unhid`, `trashed`, `recovered` or change of `states` (extendable by 
 configuration) a Message will be sent to the configured Channels.
 
+If you are using eZ Platform Enterprise, this bundle is wired to the Form Builder and the Notification Center of eZ to 
+send Interactive Message on events. 
+
 ![Message1]
 
 > Here is an example, data and thumb image are pulled from eZ and come from the Content Repository.

@@ -19,9 +19,9 @@ use Novactive\Bundle\eZSlackBundle\Core\Slack\Button;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\InteractiveMessage;
 
 /**
- * Class Hide.
+ * Class Publish.
  */
-class Hide extends ActionProvider
+class Publish extends ActionProvider
 {
     /**
      * {@inheritdoc}
@@ -29,15 +29,11 @@ class Hide extends ActionProvider
     public function getAction(Signal $signal, int $index): ?Action
     {
         $content = $this->getContentForSignal($signal);
-        if (null === $content || !$content->contentInfo->published) {
+        if (null === $content || $content->contentInfo->published) {
             return null;
         }
-        $location = $this->repository->getLocationService()->loadLocation($content->contentInfo->mainLocationId);
-        if ($location->hidden) {
-            return null;
-        }
-        $button = new Button($this->getAlias(), '_t:action.hide', (string) $content->id);
-        $button->setStyle(Button::DANGER_STYLE);
+        $button = new Button($this->getAlias(), '_t:action.publish', (string) $content->id);
+        $button->setStyle(Button::PRIMARY_STYLE);
 
         return $button;
     }
@@ -51,15 +47,12 @@ class Hide extends ActionProvider
         $value  = (int) $action->getValue();
 
         $attachment = new Attachment();
-        $attachment->setTitle('_t:action.hide');
+        $attachment->setTitle('_t:action.publish');
         try {
-            $content   = $this->repository->getContentService()->loadContent($value);
-            $locations = $this->repository->getLocationService()->loadLocations($content->contentInfo);
-            foreach ($locations as $location) {
-                $this->repository->getLocationService()->hideLocation($location);
-            }
+            $content = $this->repository->getContentService()->loadContent($value);
+            $this->repository->getContentService()->publishVersion($content->versionInfo);
             $attachment->setColor('good');
-            $attachment->setText('_t:action.locations.hid');
+            $attachment->setText('_t:action.content.published');
         } catch (\Exception $e) {
             $attachment->setColor('danger');
             $attachment->setText($e->getMessage());
