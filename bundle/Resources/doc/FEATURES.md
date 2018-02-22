@@ -5,8 +5,8 @@
 When an Content is `published`, `hid`, `unhid`, `trashed`, `recovered` or change of `states` (extendable by 
 configuration) a Message will be sent to the configured Channels.
 
-If you are using eZ Platform Enterprise, this bundle is wired to the Form Builder and the Notification Center of eZ to 
-send Interactive Message on events. 
+If you are using eZ Platform Enterprise, this bundle is wired to the **Form Builder Submissions** and the 
+**eZ Notification Center** to send Interactive Message on events. 
 
 ![Message1]
 
