@@ -47,6 +47,9 @@ class AddObjectStatesCommand extends Command
             ->setHidden(true);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $currentUser = $this->repository->getPermissionResolver()->getCurrentUserReference();

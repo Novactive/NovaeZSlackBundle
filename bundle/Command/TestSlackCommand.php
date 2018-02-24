@@ -49,6 +49,9 @@ class TestSlackCommand extends Command
             ->addArgument('args', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'The arguments');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $firstResponder = $this->firstResponder;

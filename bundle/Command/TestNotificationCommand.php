@@ -53,6 +53,9 @@ class TestNotificationCommand extends Command
             ->addArgument('contentId', InputArgument::OPTIONAL, 'ContentId', 1);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $contentId = (int) $input->getArgument('contentId');

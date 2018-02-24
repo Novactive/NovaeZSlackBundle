@@ -43,6 +43,9 @@ class PublicationChainChangeState extends ActionProvider
                     break;
                 }
             }
+            if (null === $chainGroup) {
+                return null;
+            }
             $states = $objectStateService->loadObjectStates($chainGroup);
             $select = new Select($this->getAlias(), '_t:action.publication_chain.change_state', '');
             foreach ($states as $state) {
