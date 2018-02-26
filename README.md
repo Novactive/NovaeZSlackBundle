@@ -22,6 +22,10 @@ Slack workspace.** (see [usage](bundle/Resources/doc/USAGE.md) to learn how to d
 By default, on top of those high-level features, this bundle provides interactions and commands. 
 (see [features](bundle/Resources/doc/FEATURES.md))
 
+
+DEMO: https://youtu.be/3DTe6pDCx1w
+
+
 ## Features
 
 [Features](bundle/Resources/doc/FEATURES.md)
