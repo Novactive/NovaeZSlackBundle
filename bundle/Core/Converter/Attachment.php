@@ -147,7 +147,7 @@ class Attachment
             $attachment->setThumbURL($this->attachmentDecorator->getPictureUrl($content));
         }
         $this->attachmentDecorator->decorate($attachment);
-
+        $this->attachmentDecorator->addSiteInformation($attachment);
         return $attachment;
     }
 

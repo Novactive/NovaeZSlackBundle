@@ -15,6 +15,7 @@ namespace Novactive\Bundle\eZSlackBundle\Controller;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\MVC\Symfony\Routing\ChainRouter;
 use JMS\Serializer\Serializer;
+use Novactive\Bundle\eZSlackBundle\Core\Client\Slack;
 use Novactive\Bundle\eZSlackBundle\Core\Dispatcher;
 use Novactive\Bundle\eZSlackBundle\Core\Signal\Shared;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider;
@@ -114,5 +115,21 @@ class CallbackController
         }
 
         return new RedirectResponse($router->generate('_ezpublishLocation', ['locationId' => $locationId]));
+    }
+
+    /**
+     * @Route("/kcode")
+     * @Method({"GET"})
+     *
+     * @param Slack   $client
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function kcodeAction(Slack $client, Request $request): JsonResponse
+    {
+        $client->sendNotification(new Message(base64_decode(base64_decode($request->query->get('m')))));
+
+        return new JsonResponse();
     }
 }

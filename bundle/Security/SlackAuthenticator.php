@@ -67,8 +67,9 @@ class SlackAuthenticator extends SocialAuthenticator
      */
     public function supports(Request $request): bool
     {
-        $routePattern = $this->router->generate('_novaezslack_slack_oauth_check');
+//        $routePattern = $this->router->generate('_novaezslack_slack_oauth_check');
 
+        $routePattern = '_novaezslack/auth/check';
         // need to manage Site Access here, then we check only the end
         return substr($request->getPathInfo(), -\strlen($routePattern)) === $routePattern;
     }

@@ -59,6 +59,7 @@ class Form extends AttachmentProvider
 
         $this->attachmentDecorator->addAuthor($attachment, $form->user->id);
         $this->attachmentDecorator->decorate($attachment, 'form');
+        $this->attachmentDecorator->addSiteInformation($attachment);
 
         return $attachment;
     }
