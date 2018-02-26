@@ -52,14 +52,14 @@ class RemoveObjectStatesCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $currentUser = $this->repository->getPermissionResolver()->getCurrentUserReference();
-        $admin       = $this->repository->getUserService()->loadUser(14);
+        $admin = $this->repository->getUserService()->loadUser(14);
         $this->repository->getPermissionResolver()->setCurrentUserReference($admin);
 
         $allGroups = $this->repository->getObjectStateService()->loadObjectStateGroups();
         foreach ($allGroups as $group) {
             if ('publication_chain' === $group->identifier) {
                 $this->repository->getObjectStateService()->deleteObjectStateGroup($group);
+
                 return;
             }
         }

@@ -148,6 +148,7 @@ class Attachment
         }
         $this->attachmentDecorator->decorate($attachment);
         $this->attachmentDecorator->addSiteInformation($attachment);
+
         return $attachment;
     }
 

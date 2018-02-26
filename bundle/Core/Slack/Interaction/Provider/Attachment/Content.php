@@ -44,9 +44,9 @@ class Content extends AttachmentProvider
     {
         $contentId = 0;
         if (isset($signal->contentId)) {
-            $contentId = (int)$signal->contentId;
+            $contentId = (int) $signal->contentId;
         } elseif (isset($signal->data)) {
-            $contentId = (int)($signal->data['content_id'] ?? $signal->data['contentId'] ?? 0);
+            $contentId = (int) ($signal->data['content_id'] ?? $signal->data['contentId'] ?? 0);
         }
 
         if ($contentId > 0) {
