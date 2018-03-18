@@ -15,7 +15,7 @@
         "MIT"
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.1",
         "jms/serializer-bundle": "^2.3",
         "nesbot/carbon": "^1.22",
         "netgen/query-translator": "^1.0",
