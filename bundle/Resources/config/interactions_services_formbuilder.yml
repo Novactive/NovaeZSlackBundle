@@ -1,0 +1,11 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        public: false
+
+    # Define the providers
+    Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Attachment\Form:
+        tags:
+            - { name: "novaezslack.attachment.provider", alias: "form"}

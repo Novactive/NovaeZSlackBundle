@@ -1,0 +1,59 @@
+parameters:
+    novaezslack.attachment.provider.content.class: Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Attachment\Content
+
+services:
+    _defaults:
+        autowire: true
+        public: false
+
+
+    # Define the providers
+    novaezslack.attachment.provider.content.main:
+        class: "%novaezslack.attachment.provider.content.class%"
+        tags:
+            - { name: "novaezslack.attachment.provider", alias: "main"}
+
+    novaezslack.attachment.provider.content.details:
+        class: "%novaezslack.attachment.provider.content.class%"
+        tags:
+            - { name: "novaezslack.attachment.provider", alias: "details"}
+
+    novaezslack.attachment.provider.content.preview:
+        class: "%novaezslack.attachment.provider.content.class%"
+        tags:
+            - { name: "novaezslack.attachment.provider", alias: "preview"}
+
+    Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Attachment\BasicActions:
+        tags:
+            - { name: "novaezslack.attachment.provider", alias: "basic-actions"}
+
+    Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Attachment\States:
+        tags:
+            - { name: "novaezslack.attachment.provider", alias: "states"}
+
+
+    # Define the Actions and associate them to the provider
+
+    Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action\Hide:
+        tags:
+            - { name: "novaezslack.action.provider", alias: "hide", attachment: "basic-actions" }
+
+    Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action\Unhide:
+        tags:
+            - { name: "novaezslack.action.provider", alias: "unhide", attachment: "basic-actions" }
+
+    Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action\Trash:
+        tags:
+            - { name: "novaezslack.action.provider", alias: "trash", attachment: "basic-actions" }
+
+    Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action\Recover:
+        tags:
+            - { name: "novaezslack.action.provider", alias: "recover", attachment: "basic-actions" }
+
+    Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action\Publish:
+        tags:
+            - { name: "novaezslack.action.provider", alias: "publish", attachment: "basic-actions" }
+
+    Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action\PublicationChainChangeState:
+        tags:
+            - { name: "novaezslack.action.provider", alias: "publication_chain.change_state", attachment: "states" }

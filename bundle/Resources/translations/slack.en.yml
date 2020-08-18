@@ -1,0 +1,42 @@
+---
+error.tryagain: "Sorry, that didn't work. Please try again."
+admin.share.on.slack: "Share on Slack"
+
+field.content.published: "Published"
+field.content.modified: "Modified"
+field.content.id: "Content Id"
+field.content.version: "Version"
+field.content.mainlocationid: "Main Location Id"
+field.content.languages: "Languages"
+
+message.text.content.created: "A new content has been created."
+message.text.content.updated: "A content has been updated."
+message.text.content.hid: "A content has been hidden."
+message.text.content.unhid: "A content has been made visible."
+message.text.content.trashed: "A content has been trashed."
+message.text.content.recovered: "A content has been recovered."
+message.text.content.state.updated: "The state for this content has been updated."
+message.text.content.shared: "This content has just been shared."
+message.text.workflow.content: "Here is a workflow notification."
+message.text.formsubmit: "A form has been submitted."
+message.text.notification: "A new notification has arrived."
+
+action.trash: "Trash"
+action.recover: "Recover"
+action.publish: "Publish"
+action.hide: "Hide"
+action.locations.hid: "Location(s) have been hidden"
+action.unhide: "Make it visible"
+action.locations.unhid: "Location(s) have been unhidden"
+action.generic.confirmation: "Do you really want to do that?"
+action.locations.trashed: "Location(s) has been trashed"
+action.items.recovered: "Trashed items for this content recovered."
+action.publication_chain.change_state: "Publication Chain"
+action.state.changed: "State has been changed."
+action.content.published: "Content has been published."
+
+
+provider.basic-buttons: "Basic Actions"
+provider.states: "Object state changes"
+
+

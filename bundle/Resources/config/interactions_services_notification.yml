@@ -1,0 +1,11 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        public: false
+
+    # Define the providers
+    Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Attachment\Notification:
+        tags:
+            - { name: "novaezslack.attachment.provider", alias: "notification"}

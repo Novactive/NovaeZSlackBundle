@@ -1,0 +1,19 @@
+services:
+
+    nova_ezslack.ezadminui.component.stylesheets:
+         parent: EzSystems\EzPlatformAdminUi\Component\TwigComponent
+         public: false
+         arguments:
+             - "@twig"
+             - "@@NovaeZSlack/ezadminui/stylesheets.html.twig"
+         tags:
+             - { name: ezplatform.admin_ui.component, group: 'stylesheet-head' }
+
+    nova_ezslack.ezadminui.component.javascripts:
+         parent: EzSystems\EzPlatformAdminUi\Component\TwigComponent
+         public: false
+         arguments:
+             - "@twig"
+             - "@@NovaeZSlack/ezadminui/javascripts.html.twig"
+         tags:
+             - { name: ezplatform.admin_ui.component, group: 'script-body' }
