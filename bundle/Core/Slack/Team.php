@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack;
@@ -35,17 +37,12 @@ class Team
      */
     private $domain;
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
     /**
-     * @param string $id
-     *
      * @return Team
      */
     public function setId(string $id): self
@@ -55,17 +52,12 @@ class Team
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDomain(): string
     {
         return $this->domain;
     }
 
     /**
-     * @param string $domain
-     *
      * @return Team
      */
     public function setDomain(string $domain): self

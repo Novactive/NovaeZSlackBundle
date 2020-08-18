@@ -27,33 +27,27 @@ class UIConfigProviderUser implements ProviderInterface
     /** @var ContentTypeService */
     private $contentTypeService;
 
-    /**
-     * @param TokenStorageInterface $tokenStorage
-     * @param ContentTypeService    $contentTypeService
-     */
     public function __construct(
         TokenStorageInterface $tokenStorage,
         ContentTypeService $contentTypeService
     ) {
-        $this->tokenStorage       = $tokenStorage;
+        $this->tokenStorage = $tokenStorage;
         $this->contentTypeService = $contentTypeService;
     }
 
     /**
      * Returns configuration structure compatible with PlatformUI.
-     *
-     * @return array
      */
     public function getConfig(): array
     {
         $config = ['user' => null, 'profile_picture_field' => null];
-        $token  = $this->tokenStorage->getToken();
+        $token = $this->tokenStorage->getToken();
 
         if ($token instanceof UsernamePasswordToken || $token instanceof PostAuthenticationGuardToken) {
-            $user    = $token->getUser();
+            $user = $token->getUser();
             $apiUser = $user->getAPIUser();
 
-            $config['user']                  = $apiUser;
+            $config['user'] = $apiUser;
             $config['profile_picture_field'] = $this->resolveProfilePictureField($apiUser);
         }
 
@@ -62,10 +56,6 @@ class UIConfigProviderUser implements ProviderInterface
 
     /**
      * Returns first occurrence of an `ezimage` fieldtype.
-     *
-     * @param ApiUser $user
-     *
-     * @return Field|null
      */
     private function resolveProfilePictureField(ApiUser $user): ?Field
     {

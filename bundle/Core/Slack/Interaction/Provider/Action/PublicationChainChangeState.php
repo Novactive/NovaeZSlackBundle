@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action;
@@ -36,7 +38,7 @@ class PublicationChainChangeState extends ActionProvider
 
         try {
             $objectStateService = $this->repository->getObjectStateService();
-            $allGroups          = $objectStateService->loadObjectStateGroups();
+            $allGroups = $objectStateService->loadObjectStateGroups();
             foreach ($allGroups as $group) {
                 if ('publication_chain' === $group->identifier) {
                     $chainGroup = $group;
@@ -68,13 +70,13 @@ class PublicationChainChangeState extends ActionProvider
      */
     public function execute(InteractiveMessage $message): Attachment
     {
-        $action                  = $message->getAction();
+        $action = $message->getAction();
         list($contentId, $value) = explode(':', $action->getSelectedOption()->getValue());
-        $attachment              = new Attachment();
+        $attachment = new Attachment();
         $attachment->setTitle('_t:action.publication_chain.change_state');
         try {
             $content = $this->repository->getContentService()->loadContent((int) $contentId);
-            $state   = $this->repository->getObjectStateService()->loadObjectState((int) $value);
+            $state = $this->repository->getObjectStateService()->loadObjectState((int) $value);
             $this->repository->getObjectStateService()->setContentState(
                 $content->contentInfo,
                 $state->getObjectStateGroup(),

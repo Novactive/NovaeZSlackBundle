@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Responder;
@@ -21,22 +23,16 @@ interface ResponderInterface
 {
     /**
      * Get the name.
-     *
-     * @return string
      */
     public function getName(): string;
 
     /**
      * Get the description.
-     *
-     * @return string
      */
     public function getDescription(): string;
 
     /**
      * Get the Help.
-     *
-     * @return string
      */
     public function getHelp(): string;
 
@@ -44,8 +40,6 @@ interface ResponderInterface
      * Invoke the Responder.
      *
      * @param array $arguments The Arguments
-     *
-     * @return Message
      */
     public function respond(array $arguments = []): Message;
 }

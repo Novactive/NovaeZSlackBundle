@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action;
@@ -30,8 +32,11 @@ class Trash extends ActionProvider
     public function getAction(Signal $signal, int $index): ?Action
     {
         $content = $this->getContentForSignal($signal);
-        if (null === $content || !$content->contentInfo->published ||
-            $signal instanceof Signal\TrashService\TrashSignal) {
+        if (
+            null === $content ||
+            !$content->contentInfo->published ||
+            $signal instanceof Signal\TrashService\TrashSignal
+        ) {
             return null;
         }
         $button = new Button($this->getAlias(), '_t:action.trash', (string) $content->id);
@@ -47,8 +52,8 @@ class Trash extends ActionProvider
      */
     public function execute(InteractiveMessage $message): Attachment
     {
-        $action     = $message->getAction();
-        $value      = (int) $action->getValue();
+        $action = $message->getAction();
+        $value = (int) $action->getValue();
         $attachment = new Attachment();
         $attachment->setTitle('_t:action.trash');
         try {

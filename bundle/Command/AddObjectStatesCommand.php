@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Command;
@@ -53,28 +55,28 @@ class AddObjectStatesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $currentUser = $this->repository->getPermissionResolver()->getCurrentUserReference();
-        $admin       = $this->repository->getUserService()->loadUser(14);
+        $admin = $this->repository->getUserService()->loadUser(14);
         $this->repository->getPermissionResolver()->setCurrentUserReference($admin);
 
-        $lang                             = 'eng-GB';
-        $objectStateService               = $this->repository->getObjectStateService();
-        $groupStruct                      = $objectStateService->newObjectStateGroupCreateStruct('publication_chain');
+        $lang = 'eng-GB';
+        $objectStateService = $this->repository->getObjectStateService();
+        $groupStruct = $objectStateService->newObjectStateGroupCreateStruct('publication_chain');
         $groupStruct->defaultLanguageCode = $lang;
-        $groupStruct->names               = ['eng-GB' => 'Publication Chain'];
+        $groupStruct->names = ['eng-GB' => 'Publication Chain'];
 
         $group = $objectStateService->createObjectStateGroup($groupStruct);
 
         $states = [
             'waiting_for_review' => 'Waiting For Review',
-            'reviewed'           => 'Reviewed',
-            'validated'          => 'Validated',
-            'published'          => 'Published',
+            'reviewed' => 'Reviewed',
+            'validated' => 'Validated',
+            'published' => 'Published',
         ];
 
         foreach ($states as $key => $value) {
-            $stateStruct                      = $objectStateService->newObjectStateCreateStruct($key);
+            $stateStruct = $objectStateService->newObjectStateCreateStruct($key);
             $stateStruct->defaultLanguageCode = $lang;
-            $stateStruct->names               = [$lang => $value];
+            $stateStruct->names = [$lang => $value];
             $objectStateService->createObjectState($group, $stateStruct);
         }
         $this->repository->getPermissionResolver()->setCurrentUserReference($currentUser);

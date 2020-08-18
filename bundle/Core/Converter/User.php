@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Converter;
@@ -21,6 +23,7 @@ use eZ\Publish\API\Repository\Values\User\User as ValueUser;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use Novactive\Bundle\eZSlackBundle\Repository\User as UserRepository;
+use RuntimeException;
 
 /**
  * Class User.
@@ -49,26 +52,20 @@ class User
 
     /**
      * User constructor.
-     *
-     * @param Repository              $repository
-     * @param UserRepository          $userRepository
-     * @param ConfigResolverInterface $configResolver
      */
     public function __construct(
         Repository $repository,
         UserRepository $userRepository,
         ConfigResolverInterface $configResolver
     ) {
-        $this->repository     = $repository;
+        $this->repository = $repository;
         $this->userRepository = $userRepository;
         $this->configResolver = $configResolver;
-        $this->languages      = $configResolver->getParameter('languages');
+        $this->languages = $configResolver->getParameter('languages');
     }
 
     /**
      * @param $paramName
-     *
-     * @return mixed
      */
     private function getParameter($paramName)
     {
@@ -81,15 +78,17 @@ class User
     private function checkAndCreateFieldDefinition(): void
     {
         $contentTypeService = $this->repository->getContentTypeService();
-        $contentType        = $contentTypeService->loadContentTypeByIdentifier(
+        $contentType = $contentTypeService->loadContentTypeByIdentifier(
             $this->getParameter('slackconnect_contenttype_identifier')
         );
-        $existingFields     = [];
+        $existingFields = [];
         foreach ($contentType->fieldDefinitions as $fieldDefinition) {
             $existingFields[] = $fieldDefinition->identifier;
         }
-        if (\in_array(UserRepository::SLACK_ID, $existingFields) &&
-            \in_array(UserRepository::SLACK_TEAM_ID, $existingFields)) {
+        if (
+            \in_array(UserRepository::SLACK_ID, $existingFields) &&
+            \in_array(UserRepository::SLACK_TEAM_ID, $existingFields)
+        ) {
             return;
         }
 
@@ -99,26 +98,26 @@ class User
             $contentTypeDraft = $contentTypeService->loadContentTypeDraft($contentType->id);
         }
         if (!\in_array(UserRepository::SLACK_ID, $existingFields)) {
-            $fieldCreateStruct                 = $contentTypeService->newFieldDefinitionCreateStruct(
+            $fieldCreateStruct = $contentTypeService->newFieldDefinitionCreateStruct(
                 UserRepository::SLACK_ID,
                 'ezstring'
             );
-            $fieldCreateStruct->isSearchable   = true;
+            $fieldCreateStruct->isSearchable = true;
             $fieldCreateStruct->isTranslatable = false;
-            $fieldCreateStruct->isRequired     = false;
+            $fieldCreateStruct->isRequired = false;
             foreach ($this->languages as $lang) {
                 $fieldCreateStruct->names[$lang] = 'Slack ID';
             }
             $contentTypeService->addFieldDefinition($contentTypeDraft, $fieldCreateStruct);
         }
         if (!\in_array(UserRepository::SLACK_TEAM_ID, $existingFields)) {
-            $fieldCreateStruct                 = $contentTypeService->newFieldDefinitionCreateStruct(
+            $fieldCreateStruct = $contentTypeService->newFieldDefinitionCreateStruct(
                 UserRepository::SLACK_TEAM_ID,
                 'ezstring'
             );
-            $fieldCreateStruct->isSearchable   = true;
+            $fieldCreateStruct->isSearchable = true;
             $fieldCreateStruct->isTranslatable = false;
-            $fieldCreateStruct->isRequired     = false;
+            $fieldCreateStruct->isRequired = false;
             foreach ($this->languages as $lang) {
                 $fieldCreateStruct->names[$lang] = 'Slack Team ID';
             }
@@ -127,31 +126,26 @@ class User
         $contentTypeService->publishContentTypeDraft($contentTypeDraft);
     }
 
-    /**
-     * @param SlackResourceOwner $resource
-     * @param ValueUser          $user
-     *
-     * @return ValueUser
-     */
     private function updateUser(SlackResourceOwner $resource, ValueUser $user): ValueUser
     {
-        $slackId     = $resource->getId();
+        $slackId = $resource->getId();
         $slackTeamId = $resource->getProfile()['team'];
-        if ($user->getFieldValue(UserRepository::SLACK_ID)->text === $slackId &&
+        if (
+            $user->getFieldValue(UserRepository::SLACK_ID)->text === $slackId &&
             $user->getFieldValue(UserRepository::SLACK_TEAM_ID)->text === $slackTeamId
         ) {
             return $user;
         }
-        $attributes          = [
-            UserRepository::SLACK_ID      => $slackId,
+        $attributes = [
+            UserRepository::SLACK_ID => $slackId,
             UserRepository::SLACK_TEAM_ID => $slackTeamId,
         ];
-        $contentType         = $this->repository->getContentTypeService()->loadContentTypeByIdentifier(
+        $contentType = $this->repository->getContentTypeService()->loadContentTypeByIdentifier(
             $this->getParameter('slackconnect_contenttype_identifier')
         );
-        $contentService      = $this->repository->getContentService();
-        $userService         = $this->repository->getUserService();
-        $userUpdateStruct    = $userService->newUserUpdateStruct();
+        $contentService = $this->repository->getContentService();
+        $userService = $this->repository->getUserService();
+        $userUpdateStruct = $userService->newUserUpdateStruct();
         $contentUpdateStruct = $contentService->newContentUpdateStruct();
         foreach ($contentType->getFieldDefinitions() as $field) {
             /* @var FieldDefinition $field */
@@ -163,27 +157,22 @@ class User
             $contentUpdateStruct->setField($fieldName, $fieldValue);
         }
         $userUpdateStruct->contentUpdateStruct = $contentUpdateStruct;
-        $user                                  = $userService->updateUser($user, $userUpdateStruct);
+        $user = $userService->updateUser($user, $userUpdateStruct);
 
-        $draft   = $contentService->createContentDraft($user->contentInfo);
+        $draft = $contentService->createContentDraft($user->contentInfo);
         $content = $contentService->publishVersion($draft->versionInfo);
 
         return $userService->loadUser($content->id);
     }
 
-    /**
-     * @param SlackResourceOwner $resource
-     *
-     * @return ValueUser
-     */
     private function createUser(SlackResourceOwner $resource): ValueUser
     {
-        list($first, $last) = explode(' ', $resource->getRealName(), 2);
-        $attributes         = [
-            'last_name'                   => $first,
-            'first_name'                  => $last,
-            'signature'                   => $resource->getProfile()['title'] ?? '',
-            UserRepository::SLACK_ID      => $resource->getId(),
+        [$first, $last] = explode(' ', $resource->getRealName(), 2);
+        $attributes = [
+            'last_name' => $first,
+            'first_name' => $last,
+            'signature' => $resource->getProfile()['title'] ?? '',
+            UserRepository::SLACK_ID => $resource->getId(),
             UserRepository::SLACK_TEAM_ID => $resource->getProfile()['team'],
         ];
 
@@ -191,7 +180,7 @@ class User
             $this->getParameter('slackconnect_contenttype_identifier')
         );
 
-        $userService      = $this->repository->getUserService();
+        $userService = $this->repository->getUserService();
         $userCreateStruct = $userService->newUserCreateStruct(
             $resource->getEmail(),
             $resource->getEmail(),
@@ -209,31 +198,26 @@ class User
             $userCreateStruct->setField($fieldName, $fieldValue);
         }
         $group = $userService->loadUserGroup($this->getParameter('slackconnect_usergroup_content_id'));
-        $user  = $userService->createUser($userCreateStruct, [$group]);
+        $user = $userService->createUser($userCreateStruct, [$group]);
 
         $contentService = $this->repository->getContentService();
-        $draft          = $contentService->createContentDraft($user->contentInfo);
-        $content        = $contentService->publishVersion($draft->versionInfo);
+        $draft = $contentService->createContentDraft($user->contentInfo);
+        $content = $contentService->publishVersion($draft->versionInfo);
 
         return $userService->loadUser($content->id);
     }
 
-    /**
-     * @param ResourceOwnerInterface $resource
-     *
-     * @return ValueUser
-     */
     public function convert(ResourceOwnerInterface $resource): ValueUser
     {
         if (!$resource instanceof SlackResourceOwner) {
-            throw new \RuntimeException('User Converter works only with SlackResourceOwner.');
+            throw new RuntimeException('User Converter works only with SlackResourceOwner.');
         }
 
         return $this->repository->sudo(
             function (Repository $repository) use ($resource) {
                 $this->checkAndCreateFieldDefinition();
-                $userEmail    = $resource->getEmail();
-                $userService  = $repository->getUserService();
+                $userEmail = $resource->getEmail();
+                $userService = $repository->getUserService();
                 $existingUser = $this->userRepository->findBySlackIds(
                     (string) $resource->getId(),
                     (string) $resource->getProfile()['team']

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core;
@@ -34,19 +36,13 @@ class Dispatcher extends BaseSlot
 
     /**
      * Dispatcher constructor.
-     *
-     * @param Slack            $slackClient
-     * @param MessageConverter $messageConverter
      */
     public function __construct(Slack $slackClient, MessageConverter $messageConverter)
     {
-        $this->slackClient      = $slackClient;
+        $this->slackClient = $slackClient;
         $this->messageConverter = $messageConverter;
     }
 
-    /**
-     * @param Signal $signal
-     */
     public function receive(Signal $signal): void
     {
         $message = $this->messageConverter->convert($signal);

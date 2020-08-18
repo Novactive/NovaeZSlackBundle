@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Responder;
@@ -28,8 +30,6 @@ abstract class Responder implements ResponderInterface
      * Get the Name for a class.
      *
      * @param string $className THe ClassName
-     *
-     * @return string
      */
     final public static function getNameForClassName($className): string
     {

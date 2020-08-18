@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Converter;
@@ -21,39 +23,28 @@ use QueryTranslator\Languages\Galach\Tokenizer;
 use QueryTranslator\Languages\Galach\Values\Node as VNode;
 use QueryTranslator\Languages\Galach\Values\Token as VToken;
 use QueryTranslator\Values\Node;
+use RuntimeException;
 
 /**
  * Class Query.
  */
 class Query
 {
-    /**
-     * @param string $searchQuery
-     * @param int    $offset
-     * @param int    $limit
-     *
-     * @return eZQuery
-     */
     public function convert(string $searchQuery, int $offset = 0, int $limit = 20): eZQuery
     {
         $tokenExtractor = new FullTokenExtractor();
-        $tokenizer      = new Tokenizer($tokenExtractor);
-        $tokenSequence  = $tokenizer->tokenize($searchQuery);
-        $parser         = new Parser();
-        $syntaxTree     = $parser->parse($tokenSequence);
-        $query          = new eZQuery();
-        $query->filter  = $this->build($syntaxTree->rootNode);
-        $query->offset  = $offset;
-        $query->limit   = $limit;
+        $tokenizer = new Tokenizer($tokenExtractor);
+        $tokenSequence = $tokenizer->tokenize($searchQuery);
+        $parser = new Parser();
+        $syntaxTree = $parser->parse($tokenSequence);
+        $query = new eZQuery();
+        $query->filter = $this->build($syntaxTree->rootNode);
+        $query->offset = $offset;
+        $query->limit = $limit;
 
         return $query;
     }
 
-    /**
-     * @param Node $node
-     *
-     * @return Criterion|null
-     */
     private function build(Node $node): ?Criterion
     {
         if ($node instanceof Vnode\LogicalAnd) {
@@ -117,28 +108,17 @@ class Query
         return null;
     }
 
-    /**
-     * @param string $target
-     * @param string $date
-     *
-     * @return Criterion
-     */
     private function getDatedCriterion(string $target, string $date): Criterion
     {
         $operator = Criterion\Operator::EQ;
         if (\in_array($date[0], [Criterion\Operator::GT, Criterion\Operator::LT])) {
             $operator = $date[0];
-            $date     = (string) substr($date, 1);
+            $date = (string) substr($date, 1);
         }
 
         return new Criterion\DateMetadata($target, $operator, (new Carbon($date))->getTimestamp());
     }
 
-    /**
-     * @param VNode\Term $term
-     *
-     * @return Criterion
-     */
     private function getTermCriterion(Vnode\Term $term): Criterion
     {
         if ($term->token instanceof VToken\Word) {
@@ -173,6 +153,6 @@ class Query
             return new Criterion\FullText($term->token->tag);
         }
 
-        throw new \RuntimeException('Term '.\get_class($term).' not yet managed, consider doing a PR ;-)');
+        throw new RuntimeException('Term '.\get_class($term).' not yet managed, consider doing a PR ;-)');
     }
 }

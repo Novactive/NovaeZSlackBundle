@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,11 +9,13 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack;
 
 use JMS\Serializer\Annotation as Serializer;
+use RuntimeException;
 
 /**
  * Class Select.
@@ -52,7 +55,7 @@ class Select extends Action
     {
         foreach ($options as $option) {
             if (!$option instanceof Option) {
-                throw new \RuntimeException(sprintf('Provided Option is not an %s', Option::class));
+                throw new RuntimeException(sprintf('Provided Option is not an %s', Option::class));
             }
         }
         $this->options = $options;
@@ -61,8 +64,6 @@ class Select extends Action
     }
 
     /**
-     * @param Option $option
-     *
      * @return Select
      */
     public function addOption(Option $option): self

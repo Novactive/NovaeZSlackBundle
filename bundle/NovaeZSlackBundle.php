@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,10 +9,12 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle;
 
+use LogicException;
 use Novactive\Bundle\eZSlackBundle\DependencyInjection\CompilerPass\InteractionsPass;
 use Novactive\Bundle\eZSlackBundle\DependencyInjection\CompilerPass\TranslatableJsonSerializationCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -23,9 +26,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class NovaeZSlackBundle extends Bundle
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
@@ -42,11 +42,8 @@ class NovaeZSlackBundle extends Bundle
             $extension = $this->createContainerExtension();
             if (null !== $extension) {
                 if (!$extension instanceof ExtensionInterface) {
-                    throw new \LogicException(
-                        sprintf(
-                            'Extension %s must implement '.ExtensionInterface::class.'.',
-                            \get_class($extension)
-                        )
+                    throw new LogicException(
+                        sprintf('Extension %s must implement '.ExtensionInterface::class.'.', \get_class($extension))
                     );
                 }
                 $this->extension = $extension;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,11 +9,13 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack;
 
 use JMS\Serializer\Annotation as Serializer;
+use RuntimeException;
 
 /**
  * Class Attachment.
@@ -178,7 +181,7 @@ class Attachment
      */
     public function __construct()
     {
-        $this->fields  = [];
+        $this->fields = [];
         $this->actions = [];
     }
 
@@ -231,8 +234,6 @@ class Attachment
     }
 
     /**
-     * @param string $pretext
-     *
      * @return Attachment
      */
     public function setPretext(string $pretext): self
@@ -291,8 +292,6 @@ class Attachment
     }
 
     /**
-     * @param string $titleLink
-     *
      * @return Attachment
      */
     public function setTitleLink(string $titleLink): self
@@ -339,7 +338,7 @@ class Attachment
     {
         foreach ($fields as $field) {
             if (!$field instanceof Field) {
-                throw new \RuntimeException(sprintf('Provided Field is not an %s', Field::class));
+                throw new RuntimeException(sprintf('Provided Field is not an %s', Field::class));
             }
         }
         $this->fields = $fields;
@@ -348,8 +347,6 @@ class Attachment
     }
 
     /**
-     * @param Field $field
-     *
      * @return $this
      */
     public function addField(Field $field): self
@@ -448,8 +445,6 @@ class Attachment
     }
 
     /**
-     * @param int $timestamp
-     *
      * @return Attachment
      */
     public function setTimestamp(int $timestamp): self
@@ -468,8 +463,6 @@ class Attachment
     }
 
     /**
-     * @param string $callbackId
-     *
      * @return Attachment
      */
     public function setCallbackId(string $callbackId): self
@@ -496,7 +489,7 @@ class Attachment
     {
         foreach ($actions as $action) {
             if (!$action instanceof Action) {
-                throw new \RuntimeException(sprintf('Provided Attachment is not an %s', Action::class));
+                throw new RuntimeException(sprintf('Provided Attachment is not an %s', Action::class));
             }
         }
         $this->actions = $actions;
@@ -505,8 +498,6 @@ class Attachment
     }
 
     /**
-     * @param Action $action
-     *
      * @return Attachment
      */
     public function addAction(Action $action): self

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack;
@@ -146,25 +148,17 @@ class InteractiveMessage
         return $this;
     }
 
-    /**
-     * @return Action
-     */
     public function getAction(): Action
     {
         return $this->actions[0];
     }
 
-    /**
-     * @return string
-     */
     public function getCallbackId(): string
     {
         return $this->callbackId;
     }
 
     /**
-     * @param string $callbackId
-     *
      * @return InteractiveMessage
      */
     public function setCallbackId(string $callbackId): self
@@ -174,17 +168,12 @@ class InteractiveMessage
         return $this;
     }
 
-    /**
-     * @return Team
-     */
     public function getTeam(): Team
     {
         return $this->team;
     }
 
     /**
-     * @param Team $team
-     *
      * @return InteractiveMessage
      */
     public function setTeam(Team $team): self
@@ -194,17 +183,12 @@ class InteractiveMessage
         return $this;
     }
 
-    /**
-     * @return Channel
-     */
     public function getChannel(): Channel
     {
         return $this->channel;
     }
 
     /**
-     * @param Channel $channel
-     *
      * @return InteractiveMessage
      */
     public function setChannel(Channel $channel): self
@@ -214,17 +198,12 @@ class InteractiveMessage
         return $this;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
     /**
-     * @param User $user
-     *
      * @return InteractiveMessage
      */
     public function setUser(User $user): self
@@ -234,17 +213,12 @@ class InteractiveMessage
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getMessageTimestamp(): string
     {
         return $this->messageTimestamp;
     }
 
     /**
-     * @param string $messageTimestamp
-     *
      * @return InteractiveMessage
      */
     public function setMessageTimestamp(string $messageTimestamp): self
@@ -254,17 +228,12 @@ class InteractiveMessage
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getActionTimestamp(): string
     {
         return $this->actionTimestamp;
     }
 
     /**
-     * @param string $actionTimestamp
-     *
      * @return InteractiveMessage
      */
     public function setActionTimestamp(string $actionTimestamp): self
@@ -274,17 +243,12 @@ class InteractiveMessage
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getAttachmentIndex(): string
     {
         return $this->attachmentIndex;
     }
 
     /**
-     * @param string $attachmentIndex
-     *
      * @return InteractiveMessage
      */
     public function setAttachmentIndex(string $attachmentIndex): self
@@ -294,17 +258,12 @@ class InteractiveMessage
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getToken(): string
     {
         return $this->token;
     }
 
     /**
-     * @param string $token
-     *
      * @return InteractiveMessage
      */
     public function setToken(string $token): self
@@ -314,17 +273,12 @@ class InteractiveMessage
         return $this;
     }
 
-    /**
-     * @return Message|null
-     */
     public function getOriginalMessage(): ?Message
     {
         return $this->originalMessage;
     }
 
     /**
-     * @param Message $originalMessage
-     *
      * @return InteractiveMessage
      */
     public function setOriginalMessage(Message $originalMessage): self
@@ -334,17 +288,12 @@ class InteractiveMessage
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getResponseURL(): string
     {
         return $this->responseURL;
     }
 
     /**
-     * @param string $responseURL
-     *
      * @return InteractiveMessage
      */
     public function setResponseURL(string $responseURL): self

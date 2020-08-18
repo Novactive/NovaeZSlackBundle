@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\DependencyInjection;
@@ -26,8 +28,8 @@ class Configuration extends SiteAccessAware\Configuration
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode    = $treeBuilder->root('nova_ezslack');
-        $systemNode  = $this->generateScopeBaseNode($rootNode);
+        $rootNode = $treeBuilder->root('nova_ezslack');
+        $systemNode = $this->generateScopeBaseNode($rootNode);
         $systemNode
             ->scalarNode('slack_client_id')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('slack_client_secret')->isRequired()->cannotBeEmpty()->end()

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Command;
@@ -55,7 +57,7 @@ class TestSlackCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $firstResponder = $this->firstResponder;
-        $message        = $firstResponder(implode(' ', $input->getArgument('args')));
+        $message = $firstResponder(implode(' ', $input->getArgument('args')));
         dump($message);
         $output->writeln('Done.');
     }

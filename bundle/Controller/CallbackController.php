@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Controller;
@@ -38,12 +40,6 @@ class CallbackController
     /**
      * @Route("/command", name="novactive_ezslack_callback_command")
      * @Method({"POST"})
-     *
-     * @param Request        $request
-     * @param FirstResponder $firstResponder
-     * @param Serializer     $jmsSerializer
-     *
-     * @return JsonResponse
      */
     public function commandAction(
         Request $request,
@@ -58,12 +54,6 @@ class CallbackController
     /**
      * @Route("/message", name="novactive_ezslack_callback_message")
      * @Method({"POST"})
-     *
-     * @param Request    $request
-     * @param Serializer $jmsSerializer
-     * @param Provider   $provider
-     *
-     * @return JsonResponse
      */
     public function messageAction(
         Request $request,
@@ -73,8 +63,8 @@ class CallbackController
         // has been decoded and checked in the RequestListener already
         /** @var InteractiveMessage $interactiveMessage */
         $interactiveMessage = $request->attributes->get('interactiveMessage');
-        $attachment         = $provider->execute($interactiveMessage);
-        $originalMessage    = $interactiveMessage->getOriginalMessage();
+        $attachment = $provider->execute($interactiveMessage);
+        $originalMessage = $interactiveMessage->getOriginalMessage();
         if (null === $originalMessage) {
             // we are coming from an ephemeral (prob search)
             $originalMessage = new Message();
@@ -91,12 +81,6 @@ class CallbackController
      * @Route("/share/{locationId}", name="novactive_ezslack_callback_shareonslack")
      * @Method({"GET"})
      *
-     * @param Request     $request
-     * @param int         $locationId
-     * @param ChainRouter $router
-     * @param Dispatcher  $dispatcher
-     * @param Repository  $repository
-     *
      * @return JsonResponse|RedirectResponse
      */
     public function shareOnSlackAction(
@@ -106,9 +90,9 @@ class CallbackController
         Dispatcher $dispatcher,
         Repository $repository
     ) {
-        $location  = $repository->getLocationService()->loadLocation($locationId);
+        $location = $repository->getLocationService()->loadLocation($locationId);
         $contentId = (int) $location->contentInfo->id;
-        $slot      = new Shared(['contentId' => $contentId]);
+        $slot = new Shared(['contentId' => $contentId]);
         $dispatcher->receive($slot);
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse('ok');
@@ -120,11 +104,6 @@ class CallbackController
     /**
      * @Route("/kcode")
      * @Method({"GET"})
-     *
-     * @param Slack   $client
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     public function kcodeAction(Slack $client, Request $request): JsonResponse
     {

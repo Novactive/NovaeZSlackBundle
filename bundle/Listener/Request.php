@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Listener;
@@ -17,6 +19,7 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use JMS\Serializer\Serializer;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\InteractiveMessage;
 use Novactive\Bundle\eZSlackBundle\Repository\User as UserRepository;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
@@ -47,11 +50,6 @@ class Request
 
     /**
      * Request constructor.
-     *
-     * @param ConfigResolverInterface $configResolver
-     * @param Serializer              $serializer
-     * @param UserRepository          $userRepository
-     * @param Repository              $repository
      */
     public function __construct(
         ConfigResolverInterface $configResolver,
@@ -60,28 +58,21 @@ class Request
         Repository $repository
     ) {
         $this->configResolver = $configResolver;
-        $this->serializer     = $serializer;
+        $this->serializer = $serializer;
         $this->userRepository = $userRepository;
-        $this->repository     = $repository;
+        $this->repository = $repository;
     }
 
-    /**
-     * @param string $slackId
-     * @param string $slackTeamId
-     */
     private function sudoUser(string $slackId, string $slackTeamId): void
     {
         $user = $this->userRepository->findBySlackIds($slackId, $slackTeamId);
         if (null === $user) {
-            throw new \RuntimeException('You need to Slack Connect First before to use interactions.');
+            throw new RuntimeException('You need to Slack Connect First before to use interactions.');
         }
         $apiUser = $this->repository->getUserService()->loadUser($user->id);
         $this->repository->getPermissionResolver()->setCurrentUserReference($apiUser);
     }
 
-    /**
-     * @param GetResponseEvent $event
-     */
     public function onKernelRequest(GetResponseEvent $event): void
     {
         if (!$event->isMasterRequest()) {
@@ -90,10 +81,7 @@ class Request
         }
 
         $route = $event->getRequest()->get('_route');
-        if (!\in_array(
-            $route,
-            ['novactive_ezslack_callback_message', 'novactive_ezslack_callback_command']
-        )) {
+        if (!\in_array($route, ['novactive_ezslack_callback_message', 'novactive_ezslack_callback_command'])) {
             // don't do anything if it's not a compliant route
             return;
         }
@@ -134,9 +122,9 @@ class Request
             $event->setResponse(
                 new JsonResponse(
                     [
-                        'response_type'    => 'ephemeral',
+                        'response_type' => 'ephemeral',
                         'replace_original' => true,
-                        'text'             => $e->getMessage(),
+                        'text' => $e->getMessage(),
                     ]
                 )
             );
@@ -146,9 +134,9 @@ class Request
         $event->setResponse(
             new JsonResponse(
                 [
-                    'response_type'    => 'ephemeral',
+                    'response_type' => 'ephemeral',
                     'replace_original' => false,
-                    'text'             => "Sorry, that didn't work. Please try again.",
+                    'text' => "Sorry, that didn't work. Please try again.",
                 ]
             )
         );

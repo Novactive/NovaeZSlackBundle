@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Responder;
@@ -41,18 +43,14 @@ class Search extends Responder
 
     /**
      * Search constructor.
-     *
-     * @param Repository       $repository
-     * @param QueryConverter   $queryConverter
-     * @param MessageConverter $messageConverter
      */
     public function __construct(
         Repository $repository,
         QueryConverter $queryConverter,
         MessageConverter $messageConverter
     ) {
-        $this->repository       = $repository;
-        $this->queryConverter   = $queryConverter;
+        $this->repository = $repository;
+        $this->queryConverter = $queryConverter;
         $this->messageConverter = $messageConverter;
     }
 
@@ -92,7 +90,7 @@ class Search extends Responder
         } else {
             $message->setText(sprintf('I found %d contents.', $results->totalCount));
             foreach ($results->searchHits as $searchHit) {
-                $signal         = new Searched(['contentId' => $searchHit->valueObject->id]);
+                $signal = new Searched(['contentId' => $searchHit->valueObject->id]);
                 $contentMessage = $this->messageConverter->convert($signal);
                 // we just want the main
                 $message->addAttachment($contentMessage->getAttachments()[0]);

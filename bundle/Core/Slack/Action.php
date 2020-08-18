@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack;
@@ -68,15 +70,11 @@ abstract class Action
 
     /**
      * Action constructor.
-     *
-     * @param string $name
-     * @param string $text
-     * @param string $value
      */
     public function __construct(string $name, string $text, string $value)
     {
-        $this->name  = $name;
-        $this->text  = $text;
+        $this->name = $name;
+        $this->text = $text;
         $this->value = $value;
     }
 
@@ -89,8 +87,6 @@ abstract class Action
     }
 
     /**
-     * @param string $name
-     *
      * @return Action
      */
     public function setName(string $name): self
@@ -109,8 +105,6 @@ abstract class Action
     }
 
     /**
-     * @param string $text
-     *
      * @return Action
      */
     public function setText(string $text): self
@@ -129,8 +123,6 @@ abstract class Action
     }
 
     /**
-     * @param string $value
-     *
      * @return Action
      */
     public function setValue(string $value): self
@@ -149,8 +141,6 @@ abstract class Action
     }
 
     /**
-     * @param Confirmation $confirmation
-     *
      * @return Action
      */
     public function setConfirmation(Confirmation $confirmation): self
@@ -163,25 +153,17 @@ abstract class Action
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getSelectedOptions(): string
     {
         return $this->selectedOptions;
     }
 
-    /**
-     * @return Option|null
-     */
     public function getSelectedOption(): ?Option
     {
         return $this->selectedOptions[0];
     }
 
     /**
-     * @param string $selectedOptions
-     *
      * @return Action
      */
     public function setSelectedOptions(string $selectedOptions): self
@@ -194,8 +176,6 @@ abstract class Action
     /**
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("type")
-     *
-     * @return string
      */
     abstract public function getObjectType(): string;
 }

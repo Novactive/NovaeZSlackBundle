@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack;
@@ -56,8 +58,6 @@ class Confirmation
 
     /**
      * Confirmation constructor.
-     *
-     * @param string $title
      */
     public function __construct(string $text)
     {
@@ -73,8 +73,6 @@ class Confirmation
     }
 
     /**
-     * @param string $title
-     *
      * @return Confirmation
      */
     public function setTitle(string $title): self
@@ -84,17 +82,12 @@ class Confirmation
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getText(): string
     {
         return $this->text;
     }
 
     /**
-     * @param string $text
-     *
      * @return Confirmation
      */
     public function setText(string $text): self
@@ -113,8 +106,6 @@ class Confirmation
     }
 
     /**
-     * @param string $okText
-     *
      * @return Confirmation
      */
     public function setOkText(string $okText): self
@@ -133,8 +124,6 @@ class Confirmation
     }
 
     /**
-     * @param string $dismissText
-     *
      * @return Confirmation
      */
     public function setDismissText(string $dismissText): self

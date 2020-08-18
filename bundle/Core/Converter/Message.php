@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Converter;
@@ -29,20 +31,12 @@ class Message
 
     /**
      * Message constructor.
-     *
-     * @param InteractionProvider $provider
      */
     public function __construct(InteractionProvider $provider)
     {
         $this->provider = $provider;
     }
 
-    /**
-     * @param Signal            $signal
-     * @param MessageModel|null $message
-     *
-     * @return MessageModel
-     */
     public function convert(Signal $signal, ?MessageModel $message = null): MessageModel
     {
         if (null === $message) {
@@ -74,12 +68,16 @@ class Message
                 $message->setText('_t:message.text.content.shared');
             }
             // eZ Platform Enterprise
-            if (class_exists(\EzSystems\FormBuilder\Core\SignalSlot\Signal\FormSubmit::class) &&
-                $signal instanceof \EzSystems\FormBuilder\Core\SignalSlot\Signal\FormSubmit) {
+            if (
+                class_exists(\EzSystems\FormBuilder\Core\SignalSlot\Signal\FormSubmit::class) &&
+                $signal instanceof \EzSystems\FormBuilder\Core\SignalSlot\Signal\FormSubmit
+            ) {
                 $message->setText('_t:message.text.formsubmit');
             }
-            if (class_exists(\EzSystems\Notification\Core\SignalSlot\Signal\NotificationSignal::class) &&
-                $signal instanceof \EzSystems\Notification\Core\SignalSlot\Signal\NotificationSignal) {
+            if (
+                class_exists(\EzSystems\Notification\Core\SignalSlot\Signal\NotificationSignal::class) &&
+                $signal instanceof \EzSystems\Notification\Core\SignalSlot\Signal\NotificationSignal
+            ) {
                 $message->setText('_t:message.text.notification');
             }
         }

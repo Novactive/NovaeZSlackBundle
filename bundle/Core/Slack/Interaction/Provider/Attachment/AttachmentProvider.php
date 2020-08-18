@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Attachment;
@@ -20,6 +22,7 @@ use Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action\Action
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action\ActionProviderInterface;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\AliasTrait;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\InteractiveMessage;
+use RuntimeException;
 
 /**
  * Class AttachmentProvider.
@@ -41,8 +44,6 @@ abstract class AttachmentProvider implements AttachmentProviderInterface
     /**
      * @required
      *
-     * @param AttachmentDecorator $attachmentDecorator
-     *
      * @return AttachmentProvider
      */
     public function setAttachmentDecorator(AttachmentDecorator $attachmentDecorator): self
@@ -53,8 +54,6 @@ abstract class AttachmentProvider implements AttachmentProviderInterface
     }
 
     /**
-     * @param ActionProviderInterface $action
-     *
      * @return BasicActions
      */
     public function addAction(ActionProviderInterface $action, string $alias): self
@@ -66,8 +65,6 @@ abstract class AttachmentProvider implements AttachmentProviderInterface
     }
 
     /**
-     * @param Signal $signal
-     *
      * @return Action[]
      */
     public function buildActions(Signal $signal): array
@@ -102,6 +99,6 @@ abstract class AttachmentProvider implements AttachmentProviderInterface
             }
         }
 
-        throw new \RuntimeException("No Action Provider supports '{$action->getName()}'.");
+        throw new RuntimeException("No Action Provider supports '{$action->getName()}'.");
     }
 }

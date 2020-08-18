@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\DependencyInjection\CompilerPass;
@@ -36,10 +38,10 @@ class InteractionsPass implements CompilerPassInterface
         // Inject the Attachment Providers to the Dispatcher
         // get a mapping table to inject action in provider in the next loop
         $interactionProviders = $container->findTaggedServiceIds('novaezslack.attachment.provider');
-        $providersMap         = [];
+        $providersMap = [];
         foreach ($interactionProviders as $id => $tags) {
             foreach ($tags as $attributes) {
-                $alias                = $attributes['alias'];
+                $alias = $attributes['alias'];
                 $providersMap[$alias] = $id;
                 $providerDefinition->addMethodCall(
                     'addAttachmentProvider',
@@ -51,8 +53,8 @@ class InteractionsPass implements CompilerPassInterface
         $actionProviders = $container->findTaggedServiceIds('novaezslack.action.provider');
         foreach ($actionProviders as $id => $tags) {
             foreach ($tags as $attributes) {
-                $alias                 = $attributes['alias'];
-                $attachment            = $attributes['attachment'];
+                $alias = $attributes['alias'];
+                $attachment = $attributes['attachment'];
                 $subProviderDefinition = $container->findDefinition($providersMap[$attachment]);
                 $subProviderDefinition->addMethodCall(
                     'addAction',

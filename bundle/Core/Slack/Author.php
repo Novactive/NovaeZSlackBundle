@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack;
@@ -46,10 +48,6 @@ class Author
 
     /**
      * Author constructor.
-     *
-     * @param null|string $name
-     * @param null|string $link
-     * @param null|string $icon
      */
     public function __construct(?string $name = null, ?string $link = null, ?string $icon = null)
     {
@@ -66,9 +64,6 @@ class Author
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -84,9 +79,6 @@ class Author
         return $this->link;
     }
 
-    /**
-     * @param string $link
-     */
     public function setLink(string $link): self
     {
         $this->link = $link;

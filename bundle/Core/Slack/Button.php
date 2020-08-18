@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,11 +9,13 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack;
 
 use JMS\Serializer\Annotation as Serializer;
+use RuntimeException;
 
 /**
  * Class Button.
@@ -35,7 +38,7 @@ class Button extends Action
 
     public const DEFAULT_STYLE = 'default';
     public const PRIMARY_STYLE = 'primary';
-    public const DANGER_STYLE  = 'danger';
+    public const DANGER_STYLE = 'danger';
 
     /**
      * @var array
@@ -44,10 +47,6 @@ class Button extends Action
 
     /**
      * Button constructor.
-     *
-     * @param string $name
-     * @param string $text
-     * @param string $value
      */
     public function __construct(string $name, string $text, string $value)
     {
@@ -55,23 +54,18 @@ class Button extends Action
         $this->style = self::DEFAULT_STYLE;
     }
 
-    /**
-     * @return string
-     */
     public function getStyle(): string
     {
         return $this->style;
     }
 
     /**
-     * @param string $style
-     *
      * @return Button
      */
     public function setStyle(string $style): self
     {
         if (!\in_array($style, self::STYLES)) {
-            throw new \RuntimeException("Style {$style} is not allowed.");
+            throw new RuntimeException("Style {$style} is not allowed.");
         }
         $this->style = $style;
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Converter;
@@ -61,13 +63,6 @@ class Attachment
 
     /**
      * Attachment constructor.
-     *
-     * @param Repository              $repository
-     * @param RichTextConverter       $converter
-     * @param UrlGeneratorInterface   $router
-     * @param ConfigResolverInterface $configResolver
-     * @param AttachmentDecorator     $decorator
-     * @param array                   $siteAccessList
      */
     public function __construct(
         Repository $repository,
@@ -77,29 +72,22 @@ class Attachment
         AttachmentDecorator $decorator,
         array $siteAccessList
     ) {
-        $this->repository          = $repository;
-        $this->richTextConverter   = $converter;
-        $this->siteAccessList      = $siteAccessList;
-        $this->router              = $router;
+        $this->repository = $repository;
+        $this->richTextConverter = $converter;
+        $this->siteAccessList = $siteAccessList;
+        $this->router = $router;
         $this->attachmentDecorator = $decorator;
-        $this->configResolver      = $configResolver;
+        $this->configResolver = $configResolver;
     }
 
     /**
      * @param $name
-     *
-     * @return mixed
      */
     private function getParameter($name)
     {
         return $this->configResolver->getParameter($name, 'nova_ezslack');
     }
 
-    /**
-     * @param int $id
-     *
-     * @return Content
-     */
     private function findContent(int $id): Content
     {
         $contentService = $this->repository->getContentService();
@@ -108,8 +96,6 @@ class Attachment
     }
 
     /**
-     * @param int $contentId
-     *
      * @return Attachment[]
      */
     public function convert(int $contentId): array
@@ -126,14 +112,9 @@ class Attachment
         return $attachments;
     }
 
-    /**
-     * @param int $contentId
-     *
-     * @return AttachmentModel
-     */
     public function getMain(int $contentId): AttachmentModel
     {
-        $content    = $this->findContent($contentId);
+        $content = $this->findContent($contentId);
         $attachment = new AttachmentModel();
         $this->attachmentDecorator->addAuthor($attachment, $content->contentInfo->ownerId);
         $attachment->setTitle($content->contentInfo->name);
@@ -152,16 +133,11 @@ class Attachment
         return $attachment;
     }
 
-    /**
-     * @param int $contentId
-     *
-     * @return AttachmentModel
-     */
     public function getDetails(int $contentId): AttachmentModel
     {
-        $content    = $this->findContent($contentId);
+        $content = $this->findContent($contentId);
         $attachment = new AttachmentModel();
-        $fields     = [];
+        $fields = [];
         if (null !== $content->contentInfo->publishedDate) {
             $fields[] = new Field(
                 '_t:field.content.published',
@@ -194,12 +170,12 @@ class Attachment
 
         // states
         $objectStateService = $this->repository->getObjectStateService();
-        $allGroups          = $objectStateService->loadObjectStateGroups();
+        $allGroups = $objectStateService->loadObjectStateGroups();
         foreach ($allGroups as $group) {
             if ('ez_lock' === $group->identifier) {
                 continue;
             }
-            $state    = $this->repository->getObjectStateService()->getContentState($content->contentInfo, $group);
+            $state = $this->repository->getObjectStateService()->getContentState($content->contentInfo, $group);
             $fields[] = new Field($group->getName($group->mainLanguageCode), $state->getName($state->mainLanguageCode));
         }
 
@@ -207,7 +183,7 @@ class Attachment
             $locations = $this->repository->getLocationService()->loadLocations($content->contentInfo);
             foreach ($locations as $location) {
                 foreach ($this->siteAccessList as $siteAccessName) {
-                    $url       = $this->router->generate(
+                    $url = $this->router->generate(
                         $location,
                         [
                             'siteaccess' => $siteAccessName,
@@ -228,14 +204,9 @@ class Attachment
         return $attachment;
     }
 
-    /**
-     * @param int $contentId
-     *
-     * @return AttachmentModel|null
-     */
     public function getPreview(int $contentId): ?AttachmentModel
     {
-        $content      = $this->findContent($contentId);
+        $content = $this->findContent($contentId);
         $mediaSection = $this->repository->sudo(
             function (Repository $repository) {
                 return $repository->getSectionService()->loadSectionByIdentifier('media');
@@ -252,11 +223,6 @@ class Attachment
         return null;
     }
 
-    /**
-     * @param ValueContent $content
-     *
-     * @return null|string
-     */
     private function getDescription(ValueContent $content): ?string
     {
         $fieldIdentifiers = $this->getParameter('field_identifiers')['description'];
@@ -276,11 +242,6 @@ class Attachment
         return null;
     }
 
-    /**
-     * @param \DateTime $dateTime
-     *
-     * @return string
-     */
     private function formatDate(DateTime $dateTime): string
     {
         return $dateTime->format(DateTime::RFC850);

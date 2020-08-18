@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action;
@@ -29,8 +31,12 @@ class Unhide extends ActionProvider
     public function getAction(Signal $signal, int $index): ?Action
     {
         $content = $this->getContentForSignal($signal);
-        if (null === $content || !$content->contentInfo->published || null === $content->contentInfo->mainLocationId ||
-            $signal instanceof Signal\TrashService\TrashSignal) {
+        if (
+            null === $content ||
+            !$content->contentInfo->published ||
+            null === $content->contentInfo->mainLocationId ||
+            $signal instanceof Signal\TrashService\TrashSignal
+        ) {
             return null;
         }
 
@@ -50,12 +56,12 @@ class Unhide extends ActionProvider
     public function execute(InteractiveMessage $message): Attachment
     {
         $action = $message->getAction();
-        $value  = (int) $action->getValue();
+        $value = (int) $action->getValue();
 
         $attachment = new Attachment();
         $attachment->setTitle('_t:action.unhide');
         try {
-            $content   = $this->repository->getContentService()->loadContent($value);
+            $content = $this->repository->getContentService()->loadContent($value);
             $locations = $this->repository->getLocationService()->loadLocations($content->contentInfo);
             foreach ($locations as $location) {
                 $this->repository->getLocationService()->unhideLocation($location);

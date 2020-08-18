@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,11 +9,13 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack;
 
 use JMS\Serializer\Annotation as Serializer;
+use RuntimeException;
 
 /**
  * Class Message.
@@ -39,9 +42,6 @@ class Message
 
     /**
      * Message constructor.
-     *
-     * @param null|string $text
-     * @param array       $attachements
      */
     public function __construct(?string $text = null, array $attachements = [])
     {
@@ -58,8 +58,6 @@ class Message
     }
 
     /**
-     * @param string $text
-     *
      * @return Message
      */
     public function setText(string $text): self
@@ -78,8 +76,6 @@ class Message
     }
 
     /**
-     * @param Attachment $attachment
-     *
      * @return $this
      */
     public function addAttachment(Attachment $attachment): self
@@ -103,15 +99,13 @@ class Message
     }
 
     /**
-     * @param array $attachments
-     *
      * @return Message
      */
     public function setAttachments(array $attachments): self
     {
         foreach ($attachments as $attachment) {
             if (!$attachment instanceof Attachment) {
-                throw new \RuntimeException(sprintf('Provided Attachment is not an %s', Attachment::class));
+                throw new RuntimeException(sprintf('Provided Attachment is not an %s', Attachment::class));
             }
         }
         $this->attachments = $attachments;
@@ -119,17 +113,12 @@ class Message
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isMarkdown(): bool
     {
         return $this->markdown;
     }
 
     /**
-     * @param bool $markdown
-     *
      * @return Message
      */
     public function setMarkdown(bool $markdown): self

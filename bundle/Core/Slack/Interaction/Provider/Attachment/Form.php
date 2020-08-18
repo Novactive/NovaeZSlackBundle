@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Attachment;
@@ -30,8 +32,6 @@ class Form extends AttachmentProvider
 
     /**
      * Form constructor.
-     *
-     * @param FormService $formService
      */
     public function __construct(FormService $formService)
     {
@@ -43,11 +43,13 @@ class Form extends AttachmentProvider
      */
     public function getAttachment(Signal $signal): ?Attachment
     {
-        if (class_exists(\EzSystems\FormBuilder\Core\SignalSlot\Signal\FormSubmit::class) &&
-            !$signal instanceof \EzSystems\FormBuilder\Core\SignalSlot\Signal\FormSubmit) {
+        if (
+            class_exists(\EzSystems\FormBuilder\Core\SignalSlot\Signal\FormSubmit::class) &&
+            !$signal instanceof \EzSystems\FormBuilder\Core\SignalSlot\Signal\FormSubmit
+        ) {
             return null;
         }
-        $form       = $this->formService->loadForm($signal->formId);
+        $form = $this->formService->loadForm($signal->formId);
         $attachment = new Attachment();
         $attachment->setTitle($form->name.' - FormId:'.$form->id);
         $attachment->setText($form->description);

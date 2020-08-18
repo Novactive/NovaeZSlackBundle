@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -36,7 +37,7 @@ class NovaeZSlackExtension extends Extension
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = $this->getConfiguration($configs, $container);
-        $config        = $this->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('ezadminui.yml');
@@ -51,7 +52,7 @@ class NovaeZSlackExtension extends Extension
             $loader->load('interactions_services_notification.yml');
         }
         $loader->load('interactions_services.yml');
-        $asseticBundles   = $container->getParameter('assetic.bundles');
+        $asseticBundles = $container->getParameter('assetic.bundles');
         $asseticBundles[] = 'NovaeZSlackBundle';
         $container->setParameter('assetic.bundles', $asseticBundles);
 

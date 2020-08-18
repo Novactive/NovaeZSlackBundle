@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack;
@@ -48,27 +50,19 @@ class Option
 
     /**
      * Option constructor.
-     *
-     * @param string $text
-     * @param string $value
      */
     public function __construct(string $text, string $value)
     {
-        $this->text  = $text;
+        $this->text = $text;
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
     public function getText(): string
     {
         return $this->text;
     }
 
     /**
-     * @param string $text
-     *
      * @return Option
      */
     public function setText(string $text): self
@@ -78,17 +72,12 @@ class Option
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->value;
     }
 
     /**
-     * @param string $value
-     *
      * @return Option
      */
     public function setValue(string $value): self
@@ -98,17 +87,12 @@ class Option
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
     /**
-     * @param string $description
-     *
      * @return Option
      */
     public function setDescription(string $description): self

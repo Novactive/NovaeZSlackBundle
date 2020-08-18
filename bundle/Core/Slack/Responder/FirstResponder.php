@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,11 +9,13 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Responder;
 
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Message;
+use RuntimeException;
 
 /**
  * Class FirstResponder.
@@ -28,8 +31,6 @@ class FirstResponder
 
     /**
      * FirstResponder constructor.
-     *
-     * @param iterable $responders
      */
     public function __construct(iterable $responders)
     {
@@ -40,8 +41,6 @@ class FirstResponder
 
     /**
      * Add a responder.
-     *
-     * @param ResponderInterface $responder
      */
     public function addResponder(ResponderInterface $responder): void
     {
@@ -52,8 +51,6 @@ class FirstResponder
      * Get the Responder.
      *
      * @param string $name
-     *
-     * @return Responder
      */
     public function getResponder($name): Responder
     {
@@ -62,18 +59,13 @@ class FirstResponder
             return $this->responders[$name];
         }
 
-        throw new \RuntimeException("No Responder with the name '{$name}''.");
+        throw new RuntimeException("No Responder with the name '{$name}''.");
     }
 
-    /**
-     * @param string $args
-     *
-     * @return Message|null
-     */
     public function __invoke(string $args): ?Message
     {
         $argsArray = explode(' ', $args);
-        $name      = array_shift($argsArray);
+        $name = array_shift($argsArray);
         $responder = $this->getResponder($name);
 
         return $responder->respond($this->parseArgs($argsArray));

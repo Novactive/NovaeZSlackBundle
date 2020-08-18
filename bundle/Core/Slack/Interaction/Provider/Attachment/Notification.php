@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Attachment;
@@ -25,8 +27,10 @@ class Notification extends AttachmentProvider
      */
     public function getAttachment(Signal $signal): ?Attachment
     {
-        if (class_exists(\EzSystems\Notification\Core\SignalSlot\Signal\NotificationSignal::class) &&
-            !$signal instanceof \EzSystems\Notification\Core\SignalSlot\Signal\NotificationSignal) {
+        if (
+            class_exists(\EzSystems\Notification\Core\SignalSlot\Signal\NotificationSignal::class) &&
+            !$signal instanceof \EzSystems\Notification\Core\SignalSlot\Signal\NotificationSignal
+        ) {
             return null;
         }
         $data = $signal->data;

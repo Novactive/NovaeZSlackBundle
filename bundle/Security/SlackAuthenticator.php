@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Security;
@@ -48,23 +50,14 @@ class SlackAuthenticator extends SocialAuthenticator
 
     /**
      * SlackAuthenticator constructor.
-     *
-     * @param ClientRegistry  $clientRegistry
-     * @param RouterInterface $router
-     * @param UserConverter   $user
      */
     public function __construct(ClientRegistry $clientRegistry, RouterInterface $router, UserConverter $user)
     {
         $this->clientRegistry = $clientRegistry;
-        $this->router         = $router;
-        $this->userConverter  = $user;
+        $this->router = $router;
+        $this->userConverter = $user;
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return bool
-     */
     public function supports(Request $request): bool
     {
 //        $routePattern = $this->router->generate('_novaezslack_slack_oauth_check');
@@ -82,12 +75,6 @@ class SlackAuthenticator extends SocialAuthenticator
         return $this->fetchAccessToken($this->getClient());
     }
 
-    /**
-     * @param mixed                 $credentials
-     * @param UserProviderInterface $userProvider
-     *
-     * @return UserInterface
-     */
     public function getUser($credentials, UserProviderInterface $userProvider): UserInterface
     {
         /** @var \eZ\Publish\Core\MVC\Symfony\Security\User\Provider $userProvider */
@@ -99,9 +86,6 @@ class SlackAuthenticator extends SocialAuthenticator
         return $user;
     }
 
-    /**
-     * @return OAuth2Client
-     */
     private function getClient(): OAuth2Client
     {
         return $this->clientRegistry->getClient('slack');
@@ -112,8 +96,6 @@ class SlackAuthenticator extends SocialAuthenticator
      *
      * @param Request                 $request       The request that resulted in an AuthenticationException
      * @param AuthenticationException $authException The exception that started the authentication process
-     *
-     * @return Response
      */
     public function start(Request $request, AuthenticationException $authException = null): Response
     {
@@ -122,9 +104,6 @@ class SlackAuthenticator extends SocialAuthenticator
 
     /**
      * Called when authentication executed, but failed (e.g. wrong username password).
-     *
-     * @param Request                 $request
-     * @param AuthenticationException $exception
      *
      * @return Response|null
      */
@@ -136,9 +115,7 @@ class SlackAuthenticator extends SocialAuthenticator
     /**
      * Called when authentication executed and was successful!
      *
-     * @param Request        $request
-     * @param TokenInterface $token
-     * @param string         $providerKey The provider (i.e. firewall) key
+     * @param string $providerKey The provider (i.e. firewall) key
      *
      * @return Response|null
      */

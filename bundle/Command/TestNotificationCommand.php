@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,13 +9,13 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Command;
 
 use eZ\Publish\Core\SignalSlot\Signal\ContentService\PublishVersionSignal;
 use Novactive\Bundle\eZSlackBundle\Core\Dispatcher;
-use Novactive\Bundle\eZSlackBundle\Core\Slack\Message;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,8 +33,6 @@ class TestNotificationCommand extends Command
 
     /**
      * TestNotificationCommand constructor.
-     *
-     * @param Dispatcher $dispatcher
      */
     public function __construct(Dispatcher $dispatcher)
     {
@@ -59,7 +58,7 @@ class TestNotificationCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $contentId = (int) $input->getArgument('contentId');
-        $slot      = new PublishVersionSignal(['contentId' => $contentId, 'versionNo' => 1]);
+        $slot = new PublishVersionSignal(['contentId' => $contentId, 'versionNo' => 1]);
         $this->dispatcher->receive($slot);
         $output->writeln("Dispatch {$contentId} Done.");
     }

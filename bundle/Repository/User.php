@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Repository;
@@ -23,8 +25,8 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
  */
 class User
 {
-    const SLACK_ID      = 'novaezslack_id';
-    const SLACK_TEAM_ID = 'novaezslack_teamid';
+    public const SLACK_ID = 'novaezslack_id';
+    public const SLACK_TEAM_ID = 'novaezslack_teamid';
 
     /**
      * @var Repository
@@ -38,28 +40,19 @@ class User
 
     /**
      * User constructor.
-     *
-     * @param Repository              $repository
-     * @param ConfigResolverInterface $configResolver
      */
     public function __construct(Repository $repository, ConfigResolverInterface $configResolver)
     {
-        $this->repository     = $repository;
+        $this->repository = $repository;
         $this->configResolver = $configResolver;
     }
 
-    /**
-     * @param string $id
-     * @param string $teamId
-     *
-     * @return ValueUser|null
-     */
     public function findBySlackIds(string $id, string $teamId): ?ValueUser
     {
         return $this->repository->sudo(
             function (Repository $repository) use ($id, $teamId) {
                 $searchService = $repository->getSearchService();
-                $query         = new eZQuery();
+                $query = new eZQuery();
                 $query->filter = new Criterion\LogicalAnd(
                     [
                         new Criterion\ContentTypeIdentifier(
@@ -73,7 +66,7 @@ class User
                         ),
                     ]
                 );
-                $result        = $searchService->findContent($query);
+                $result = $searchService->findContent($query);
 
                 return $result->totalCount >= 1 ? $repository->getUserService()->loadUser(
                     $result->searchHits[0]->valueObject->id

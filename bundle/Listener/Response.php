@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Listener;
@@ -35,27 +37,21 @@ class Response
 
     /**
      * Response constructor.
-     *
-     * @param RouterInterface $router
-     * @param ClientRegistry  $clientRegistry
      */
     public function __construct(RouterInterface $router, ClientRegistry $clientRegistry)
     {
-        $this->router         = $router;
+        $this->router = $router;
         $this->clientRegistry = $clientRegistry;
     }
 
-    /**
-     * @param FilterResponseEvent $event
-     */
     public function onKernelResponse(FilterResponseEvent $event): void
     {
-        $response         = $event->getResponse();
-        $connectURL       = $this->clientRegistry->getClient('slack')->redirect(
+        $response = $event->getResponse();
+        $connectURL = $this->clientRegistry->getClient('slack')->redirect(
             ['team:read', 'users.profile:read', 'users:read', 'users:read.email']
         )->getTargetUrl();
         $slackAssetPrefix = 'https://platform.slack-edge.com';
-        $code             = <<<END
+        $code = <<<END
 <script type="text/javascript">
 $(function () {
 "use strict";

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action;
@@ -49,12 +51,12 @@ class Hide extends ActionProvider
     public function execute(InteractiveMessage $message): Attachment
     {
         $action = $message->getAction();
-        $value  = (int) $action->getValue();
+        $value = (int) $action->getValue();
 
         $attachment = new Attachment();
         $attachment->setTitle('_t:action.hide');
         try {
-            $content   = $this->repository->getContentService()->loadContent($value);
+            $content = $this->repository->getContentService()->loadContent($value);
             $locations = $this->repository->getLocationService()->loadLocations($content->contentInfo);
             foreach ($locations as $location) {
                 $this->repository->getLocationService()->hideLocation($location);

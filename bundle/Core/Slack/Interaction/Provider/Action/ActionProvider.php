@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider\Action;
@@ -32,8 +34,6 @@ abstract class ActionProvider implements ActionProviderInterface
     /**
      * @required
      *
-     * @param Repository $repository
-     *
      * @return ActionProvider
      */
     public function setRepository(Repository $repository): self
@@ -51,11 +51,6 @@ abstract class ActionProvider implements ActionProviderInterface
         return substr($alias, 0, \strlen($this->getAlias())) === $this->getAlias();
     }
 
-    /**
-     * @param Signal $signal
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Content|null
-     */
     protected function getContentForSignal(Signal $signal): ?Content
     {
         if (isset($signal->contentId)) {

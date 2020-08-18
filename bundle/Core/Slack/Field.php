@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NovaeZSlackBundle Bundle.
  *
@@ -8,6 +9,7 @@
  * @copyright 2018 Novactive
  * @license   https://github.com/Novactive/NovaeZSlackBundle/blob/master/LICENSE MIT Licence
  */
+
 declare(strict_types=1);
 
 namespace Novactive\Bundle\eZSlackBundle\Core\Slack;
@@ -46,10 +48,6 @@ class Field
 
     /**
      * Field constructor.
-     *
-     * @param string    $title
-     * @param string    $value
-     * @param bool|null $short
      */
     public function __construct(string $title, string $value, ?bool $short = true)
     {
@@ -58,17 +56,12 @@ class Field
         $this->short = $short;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
     /**
-     * @param string $title
-     *
      * @return Field
      */
     public function setTitle(string $title): self
@@ -78,17 +71,12 @@ class Field
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->value;
     }
 
     /**
-     * @param string $value
-     *
      * @return Field
      */
     public function setValue(string $value): self
@@ -98,17 +86,12 @@ class Field
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isShort(): bool
     {
         return $this->short;
     }
 
     /**
-     * @param bool $short
-     *
      * @return Field
      */
     public function setShort(bool $short): self
