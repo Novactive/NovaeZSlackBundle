@@ -26,7 +26,7 @@ use QueryTranslator\Values\Node;
 use RuntimeException;
 
 /**
- * Class Query.
+ * @SuppressWarnings(PHPMD.NPathComplexity)
  */
 class Query
 {

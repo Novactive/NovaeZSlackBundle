@@ -17,9 +17,6 @@ namespace Novactive\Bundle\eZSlackBundle\Core\Slack\Responder;
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Message;
 use RuntimeException;
 
-/**
- * Class FirstResponder.
- */
 class FirstResponder
 {
     /**

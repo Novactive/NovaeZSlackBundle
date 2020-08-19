@@ -27,7 +27,7 @@ use Novactive\Bundle\eZSlackBundle\Core\Slack\Field;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * Class Attachment.
+ * @SuppressWarnings(PHPMD.IfStatementAssignment)
  */
 class Attachment
 {

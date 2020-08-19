@@ -165,6 +165,9 @@ class User
         return $userService->loadUser($content->id);
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UndefinedVariable)
+     */
     private function createUser(SlackResourceOwner $resource): ValueUser
     {
         [$first, $last] = explode(' ', $resource->getRealName(), 2);

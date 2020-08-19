@@ -20,7 +20,7 @@ use Novactive\Bundle\eZSlackBundle\Core\Slack\Interaction\Provider as Interactio
 use Novactive\Bundle\eZSlackBundle\Core\Slack\Message as MessageModel;
 
 /**
- * Class Message.
+ * @SuppressWarnings(PHPMD.NPathComplexity)
  */
 class Message
 {
