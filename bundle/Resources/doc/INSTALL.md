@@ -1,11 +1,5 @@
 # Installation
 
-
-## Requirements
-
-* eZ Platform 2+
-* PHP 7.1+
-
 ## Installation steps
 
 There are 2 phases:
