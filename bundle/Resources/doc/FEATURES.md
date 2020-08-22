@@ -1,3 +1,5 @@
+# Novactive eZ Slack Bundle
+
 # Features
 
 ## Interactive Messages 
@@ -14,9 +16,6 @@ If you are using eZ Platform Enterprise, this bundle is wired to the **Form Buil
 
 As you can see Messages contain a set of "Interactions" (extendable via Services and tags), and by default you 
 can hide/unhide, trash/recover and change states.
-
-[See here if you want to create your own interaction](TODO)
-
 
 ## Slash Command
 
@@ -38,9 +37,6 @@ system allowing you to do crazy search like:
 - `/ez search id:12|42`
 
 > If only one result is found then the interactions are displayed allowing you to interact with the content.
-
-
-[See here if you want to create your own command](TODO)
 
 ## Screenshots
 

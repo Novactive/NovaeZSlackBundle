@@ -11,6 +11,10 @@ Documentation is available in this repository via `.md` files but also packaged 
 
 ----
 
+[![Downloads](https://img.shields.io/packagist/dt/novactive/ezslackbundle.svg?style=flat-square)](https://packagist.org/packages/novactive/ezslackbundle)
+[![Latest version](https://img.shields.io/github/release/Novactive/NovaeZSlackBundle.svg?style=flat-square)](https://github.com/Novactive/NovaeZSlackBundle/releases)
+[![License](https://img.shields.io/packagist/l/novactive/ezslackbundle.svg?style=flat-square)](LICENSE)
+
 Novactive eZ Slack Bundle is an eZ Platform bundle that provides a complete Slack integration.
 
 This bundle provides a deep Slack integration.
@@ -47,12 +51,10 @@ DEMO: https://youtu.be/3DTe6pDCx1w
 
 [Installation](bundle/Resources/doc/INSTALL.md)
 
-Change and License
-------------------
+Change
+------
 
 [Changelog](bundle/Resources/doc/CHANGELOG.md)
-
-[License](LICENSE)
 
 
 Special Mentions and Credits

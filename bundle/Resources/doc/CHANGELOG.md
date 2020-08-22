@@ -1,3 +1,5 @@
+# Novactive eZ Slack Bundle
+
 # Changelog
 
 ## 1.0.0

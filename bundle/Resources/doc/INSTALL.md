@@ -1,11 +1,13 @@
+# Novactive eZ Slack Bundle
+
 # Installation
 
 ## Installation steps
 
 There are 2 phases:
 
-- [create the Slack Application](#slack-application) for your workspace.
-- [install the Bundle and configure it](#bundle) according to the Slack application.
+- Create the Slack Application for your workspace.
+- Install the Bundle and configure it according to the Slack application.
 
 
 ### Slack Application
