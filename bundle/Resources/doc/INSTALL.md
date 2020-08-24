@@ -75,7 +75,7 @@ multiple SiteAccess then it is fine just to mention the base url here.
 
 ### Bundle
 
-Run `composer require novactive/ezslackbundle` to install the bundle and its dependencies:
+Add the lib to your composer.json, run `composer require novactive/ezslackbundle` to refresh dependencies.
 
 ### Register the bundle
 
