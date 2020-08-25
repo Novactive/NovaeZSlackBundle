@@ -79,28 +79,15 @@ Add the lib to your composer.json, run `composer require novactive/ezslackbundle
 
 ### Register the bundle
 
-Activate the bundle in `app\AppKernel.php` file.
+Then inject the bundle in the `bundles.php` of your application.
 
 ```php
-// app\AppKernel.php
-
-public function registerBundles()
-{
-   ...
-   $bundles = array(
-       new FrameworkBundle(),
-       ...
-       // NovaeZSlackBundle
-       new JMS\SerializerBundle\JMSSerializerBundle(),
-       new KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle(),
-       new Novactive\Bundle\eZSlackBundle\NovaeZSlackBundle(),
-   );
-   ...
-}
+    JMS\SerializerBundle\JMSSerializerBundle::class => [ 'all'=> true ],
+    KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle::class => [ 'all'=> true ],
+    Novactive\Bundle\eZSlackBundle\NovaeZSlackBundle::class => [ 'all'=> true ],
 ```
 
 > If you already have _JMSSerializerBundle_ or  _KnpUOAuth2ClientBundle_ do not add them a second time.
-
 
 ### Add routes
 
