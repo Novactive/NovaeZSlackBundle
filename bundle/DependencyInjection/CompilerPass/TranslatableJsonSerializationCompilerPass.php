@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class TranslatableJsonSerializationCompilerPass.
+ * @SuppressWarnings(PHPMD)
  */
 class TranslatableJsonSerializationCompilerPass implements CompilerPassInterface
 {

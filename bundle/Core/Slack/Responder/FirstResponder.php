@@ -85,9 +85,9 @@ class FirstResponder
         $o = [];
         foreach ($argv as $a) {
             if ('--' === substr($a, 0, 2)) {
-                $eq = strpos($a, '=');
-                if (false !== $eq) {
-                    $o[substr($a, 2, $eq - 2)] = substr($a, $eq + 1);
+                $equal = strpos($a, '=');
+                if (false !== $equal) {
+                    $o[substr($a, 2, $equal - 2)] = substr($a, $equal + 1);
                 } else {
                     $k = substr($a, 2);
                     if (!isset($o[$k])) {
