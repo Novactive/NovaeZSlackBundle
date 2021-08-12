@@ -126,16 +126,16 @@ class Query
                 return new Criterion\FullText($term->token->word);
             }
             if ('id' === strtolower($term->token->domain)) {
-                return new  Criterion\ContentId(explode('|', $term->token->word));
+                return new Criterion\ContentId(explode('|', $term->token->word));
             }
             if ('lang' === strtolower($term->token->domain)) {
-                return new  Criterion\LanguageCode(explode('|', $term->token->word));
+                return new Criterion\LanguageCode(explode('|', $term->token->word));
             }
             if ('section' === strtolower($term->token->domain)) {
-                return new  Criterion\SectionId(explode('|', $term->token->word));
+                return new Criterion\SectionId(explode('|', $term->token->word));
             }
             if ('contenttype' === strtolower($term->token->domain)) {
-                return new  Criterion\ContentTypeIdentifier(explode('|', $term->token->word));
+                return new Criterion\ContentTypeIdentifier(explode('|', $term->token->word));
             }
             if (\in_array(strtolower($term->token->domain), ['published', 'created'])) {
                 return $this->getDatedCriterion(Criterion\DateMetadata::CREATED, $term->token->word);
